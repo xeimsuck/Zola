@@ -1,4 +1,4 @@
-#include "Zola/detail/Bot.hpp"
+#include "Zola/Bot.hpp"
 
 //! Constructor using a bot token
 template<is_string T>
