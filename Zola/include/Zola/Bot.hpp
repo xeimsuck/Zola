@@ -12,6 +12,7 @@
 #ifndef ZOLA_BOT_HPP
 #define ZOLA_BOT_HPP
 
+#include <iostream>
 #include <string>
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
@@ -33,11 +34,15 @@ namespace Zola {
     public:
         static Bot& init();
         [[nodiscard]]const std::string& getToken() const;
-        template<is_string T>
-        void run(T&& token);
+        void run(const std::string& token);
+    private:
+        static size_t write_callback(char* ptr, size_t size, size_t nmemb, void* data);
 
     private:
-        const std::string token;
+        std::string token;
+        std::string fullUrl;
+        int last_update_id = 0;
+        CURL* curlHandle = nullptr;
     };
 }
 

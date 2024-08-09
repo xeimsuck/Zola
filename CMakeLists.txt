@@ -3,7 +3,5 @@ project(Zola VERSION 0.1 LANGUAGES CXX DESCRIPTION "Library for working with tel
 
 set(CMAKE_CXX_STANDARD 23)
 
-if(${BUILD_EXAMPLES})
-    add_subdirectory(examples)
-endif ()
 add_subdirectory(Zola)
+add_subdirectory(examples)
