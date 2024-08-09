@@ -13,6 +13,8 @@
 #define ZOLA_BOT_HPP
 
 #include <string>
+#include <curl/curl.h>
+#include <nlohmann/json.hpp>
 
 template<typename T>
 concept is_string = std::convertible_to<T, std::string>;
@@ -22,8 +24,11 @@ namespace Zola {
     public:
         template<is_string T>
         explicit Bot(T&& token);
+        [[nodiscard]]const std::string& getToken() const;
+        void run();
     private:
         const std::string token;
+        CURL* curlHandle = nullptr;
     };
 }
 

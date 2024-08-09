@@ -8,5 +8,5 @@ FILE(GLOB_RECURSE Zola_SOURCES
 ## Build
 add_library(Zola ${Zola_SOURCES})
 ## Dependencies
-target_include_directories(Zola PUBLIC "include/")
+target_include_directories(Zola PUBLIC "include/" "lib/nlohmann")
 target_link_libraries(Zola CURL)
