@@ -1,22 +1,27 @@
 #include "Zola/Bot.hpp"
 
 //! Curl write function callback
-size_t Zola::Bot::write_callback(char *ptr, size_t size, size_t nmemb, void *data) {
+size_t Zola::Bot::write_callback(char *ptr, size_t size, size_t n, void *data) {
     auto user_data = reinterpret_cast<std::string*>(data);
-    *user_data = ptr;
-    return size*nmemb;
+    user_data->clear();
+    user_data->append(ptr, size*n);
+    return size*n;
 }
 
 //! Bot initialization
-Zola::Bot& Zola::Bot::init() {
-    static Bot bot;
+Zola::Bot& Zola::Bot::init(std::string _token) {
+    static Bot bot(std::move(_token));
     return bot;
 }
 
 //! Private constructor
-Zola::Bot::Bot() {
+Zola::Bot::Bot(std::string _token) : token(std::move(_token)) {
+    getUpdatesURL = std::format("https://api.telegram.org/bot{}/getUpdates", token);
+
     curl_global_init(CURL_GLOBAL_ALL);
     curlHandle = curl_easy_init();
+    curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, write_callback);
+    curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, &updateBuffer);
 }
 
 //! Public destructor
@@ -31,32 +36,29 @@ const std::string &Zola::Bot::getToken() const {
 }
 
 //! Run a bot using a bot token
-void Zola::Bot::run(const std::string& _token) {
-    // local variables setup
-    token = _token;
-    fullUrl = std::format("https://api.telegram.org/bot{}/getUpdates", _token);
-    std::string data;
-    int last_update_id = 0;
-
-    // curl setopt
-    curl_easy_setopt(curlHandle, CURLOPT_URL, fullUrl.c_str());
-    curl_easy_setopt(curlHandle, CURLOPT_WRITEFUNCTION, write_callback);
-    curl_easy_setopt(curlHandle, CURLOPT_WRITEDATA, &data);
-
+void Zola::Bot::run() {
+    int updateOffset = 0;
     while (true){
-        curl_easy_perform(curlHandle);
-        nlohmann::json updates = nlohmann::json::parse(data);
+        auto updates = getUpdates(updateOffset);
         if(!updates["ok"]){
-            Objects::Error error(updates["error_code"], updates["description"]);
-            errorHandler(error);
+            errorHandler(Objects::Error(updates["error_code"], updates["description"]));
         }
         std::for_each(updates["result"].begin(), updates["result"].end(), [&](const auto& parsed_update){
             Objects::Update update(parsed_update);
-            last_update_id = update.update_id;
+            updateOffset = update.update_id+1;
             updateHandler(update);
         });
         sleep(2);
     }
+}
+
+//! Return updates with offset
+nlohmann::json Zola::Bot::getUpdates(int offset) {
+    std::string fullURL = getUpdatesURL+"?offset="+std::to_string(offset);
+    curl_easy_setopt(curlHandle, CURLOPT_URL, fullURL.c_str());
+
+    curl_easy_perform(curlHandle);
+    return nlohmann::json::parse(updateBuffer);
 }
 
 //! Update handler
@@ -66,6 +68,5 @@ void Zola::Bot::updateHandler(const Objects::Update& update) {
 
 //! Error handler
 void Zola::Bot::errorHandler(const Objects::Error& error) {
-    std::cout << std::format("ERROR ({}): {}\n", error.error_code, error.description);
     throw std::runtime_error(error.description);
 }

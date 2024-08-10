@@ -31,20 +31,22 @@ namespace Zola {
         Bot& operator=(const Bot& r) = delete;
         Bot& operator=(Bot&& r) = delete;
     private:
-        Bot();
+        explicit Bot(std::string token);
 
     public:
-        static Bot& init();
+        static Bot& init(std::string token);
         [[nodiscard]]const std::string& getToken() const;
-        void run(const std::string& token);
+        void run();
     private:
+        nlohmann::json getUpdates(int offset=0);
         void updateHandler(const Objects::Update& update);
         void errorHandler(const Objects::Error& error);
-        static size_t write_callback(char* ptr, size_t size, size_t nmemb, void* data);
+        static size_t write_callback(char* ptr, size_t size, size_t n, void* data);
 
     private:
-        std::string token;
-        std::string fullUrl;
+        const std::string token;
+        std::string getUpdatesURL;
+        std::string updateBuffer;
         CURL* curlHandle = nullptr;
     };
 }
