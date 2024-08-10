@@ -13,11 +13,14 @@
 
 #include <string>
 #include <optional>
+#include <nlohmann/json.hpp>
 
 namespace Zola{
     namespace Objects {
         struct User {
-            int id=0;
+            explicit User(const nlohmann::json& data);
+            int id;
+            bool is_bot;
             std::string first_name;
             std::optional<std::string> last_name;
             std::optional<std::string> username;

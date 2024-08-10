@@ -16,6 +16,8 @@
 #include <string>
 #include <curl/curl.h>
 #include <nlohmann/json.hpp>
+#include <Zola/objects/Update.hpp>
+#include <Zola/objects/Error.hpp>
 
 template<typename T>
 concept is_string = std::convertible_to<T, std::string>;
@@ -36,12 +38,13 @@ namespace Zola {
         [[nodiscard]]const std::string& getToken() const;
         void run(const std::string& token);
     private:
+        void updateHandler(const Objects::Update& update);
+        void errorHandler(const Objects::Error& error);
         static size_t write_callback(char* ptr, size_t size, size_t nmemb, void* data);
 
     private:
         std::string token;
         std::string fullUrl;
-        int last_update_id = 0;
         CURL* curlHandle = nullptr;
     };
 }

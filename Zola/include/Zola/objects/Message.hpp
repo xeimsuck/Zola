@@ -14,21 +14,22 @@
 
 #include <string>
 #include <optional>
+#include <nlohmann/json.hpp>
 #include "Chat.hpp"
 #include "User.hpp"
 
 namespace Zola{
     namespace Objects {
         struct Message {
+            explicit Message(const nlohmann::json& data);
             int message_id=0;
-            std::optional<std::string> from;
             int date;
             Chat chat;
+            std::optional<std::string> text;
+            std::optional<User> from;
             std::optional<User> forward_from;
             std::optional<int> forward_date;
             //TODO: optional param - reply_to_message
-            std::optional<std::string> text;
-
         };
     }
 }
