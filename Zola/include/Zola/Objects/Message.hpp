@@ -18,6 +18,7 @@
 #include "Chat.hpp"
 #include "User.hpp"
 #include "Sticker.hpp"
+#include "Video.hpp"
 
 namespace Zola::Objects{
     struct Message {
@@ -45,8 +46,15 @@ namespace Zola::Objects{
         //! Date of message which was forwarded
         std::optional<int> forward_date;
 
-        //! Sticker
+        //! Message is a sticker, information about the sticker
         std::optional<Sticker> sticker;
+
+        //! Message is a video, information about the video
+        std::optional<Video> video;
+
+        //! Caption for the animation, audio, document, paid media, photo, video or voice
+        std::optional<std::string> caption;
+
         //TODO: optional param - reply_to_message
     };
 }

@@ -18,4 +18,10 @@ Zola::Objects::Message::Message(const nlohmann::json& data) : chat(data["chat"])
     if(data.contains("sticker")){
         sticker = Sticker(data["sticker"]);
     }
+    if(data.contains("video")){
+        video = Video(data["video"]);
+    }
+    if(data.contains("caption")){
+        caption = data["caption"];
+    }
 }
