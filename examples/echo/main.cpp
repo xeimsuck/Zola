@@ -10,6 +10,8 @@ int main(int argc, char*argv[]){
             bot.getAPI().sendMessage(msg.text.value(), msg.chat.id);
         } else if(msg.sticker.has_value()){
             bot.getAPI().sendSticker(msg.sticker->file_id, msg.chat.id);
+        } else if(msg.video.has_value()){
+            bot.getAPI().sendVideo(msg.video->file_id, msg.chat.id, msg.caption);
         }
     });
     try {
