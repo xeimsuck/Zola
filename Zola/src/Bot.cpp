@@ -24,6 +24,11 @@ Zola::EventHandler& Zola::Bot::getEventHandler() {
     return eventHandler;
 }
 
+//! Return a api
+Zola::API &Zola::Bot::getAPI() {
+    return api;
+}
+
 //! Run a bot using a bot token
 void Zola::Bot::run() {
     int updateOffset = 0;

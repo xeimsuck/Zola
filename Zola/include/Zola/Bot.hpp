@@ -39,6 +39,7 @@ namespace Zola {
         void run();
         [[nodiscard]] const std::string& getToken() const;
         [[nodiscard]] Zola::EventHandler& getEventHandler();
+        [[nodiscard]] Zola::API& getAPI();
 
     private:
         const std::string token;
