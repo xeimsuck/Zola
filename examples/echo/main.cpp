@@ -5,11 +5,8 @@ using namespace Zola;
 
 int main(int argc, char*argv[]){
     decltype(auto) bot = Zola::Bot::init("YOUR TOKEN");
-    bot.getEventHandler().getMessageHandler().addAny([](const Objects::Message& msg){
-        std::cout << "Message: "<< msg.text.value_or("") << std::endl;
-    });
-    bot.getEventHandler().getCommandHandler().addAny([](const Objects::Message& msg){
-        std::cout << "Command: "<< msg.text.value_or("") << std::endl;
+    bot.getEventHandler().getMessageHandler().addAny([&](const Objects::Message& msg){
+        bot.getAPI().sendMessage(msg.text.value_or(""), msg.chat.id);
     });
     try {
         bot.run();
