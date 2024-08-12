@@ -15,14 +15,13 @@
 #include <nlohmann/json.hpp>
 #include "Message.hpp"
 
-namespace Zola{
-    namespace Objects {
-        struct Update{
-            explicit Update(const nlohmann::json& data);
-            int update_id;
-            std::optional<Message> message;
-        };
-    }
+namespace Zola::Objects{
+    struct Update{
+        explicit Update(const nlohmann::json& data);
+        int update_id;
+        std::optional<Message> message;
+        std::optional<Message> edited_message;
+    };
 }
 
 #endif //ZOLA_OBJECTS_UPDATE_HPP

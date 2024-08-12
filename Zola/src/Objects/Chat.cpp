@@ -1,4 +1,4 @@
-#include <Zola/objects/Chat.hpp>
+#include <Zola/Objects/Chat.hpp>
 
 Zola::Objects::Chat::Chat(const nlohmann::json& data){
     id = data["id"];

@@ -1,4 +1,4 @@
-#include <Zola/objects/Message.hpp>
+#include <Zola/Objects/Message.hpp>
 
 //! Message object constructor
 Zola::Objects::Message::Message(const nlohmann::json& data) : chat(data["chat"]) {

@@ -1,4 +1,4 @@
-#include <Zola/objects/User.hpp>
+#include <Zola/Objects/User.hpp>
 
 //! User object constructor
 Zola::Objects::User::User(const nlohmann::json& data){

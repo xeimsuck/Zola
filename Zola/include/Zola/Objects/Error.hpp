@@ -13,13 +13,11 @@
 
 #include <string>
 
-namespace Zola{
-    namespace Objects {
-        struct Error {
-            int error_code;
-            std::string description;
-        };
-    }
+namespace Zola::Objects{
+    struct Error {
+        int error_code;
+        std::string description;
+    };
 }
 
 

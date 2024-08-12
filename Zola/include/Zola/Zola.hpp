@@ -2,8 +2,10 @@
 #define ZOLA_ZOLA_HPP
 
 #include "Bot.hpp"
-#include "objects/Chat.hpp"
-#include "objects/User.hpp"
-#include "objects/Message.hpp"
+#include "Objects/Chat.hpp"
+#include "Objects/User.hpp"
+#include "Objects/Message.hpp"
+#include "Objects/Error.hpp"
+#include "Objects/Update.hpp"
 
 #endif //ZOLA_ZOLA_HPP

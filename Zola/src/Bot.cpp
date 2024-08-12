@@ -34,12 +34,12 @@ void Zola::Bot::run() {
                 })
         );
         if(!updates["ok"]){
-            eventHandler.ErrorHandler(Objects::Error(updates["error_code"], updates["description"]));
+            eventHandler.errorHandler(Objects::Error(updates["error_code"], updates["description"]));
         }
         std::for_each(updates["result"].begin(), updates["result"].end(), [&](const auto& unparsedUpdate){
             Objects::Update update(unparsedUpdate);
             updateOffset = update.update_id+1;
-            eventHandler.UpdateHandler(update);
+            eventHandler.updateHandler(update);
         });
         sleep(1);
     }

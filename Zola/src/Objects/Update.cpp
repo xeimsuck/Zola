@@ -1,4 +1,4 @@
-#include <Zola/objects/Update.hpp>
+#include <Zola/Objects/Update.hpp>
 
 //! Update object constructor
 Zola::Objects::Update::Update(const nlohmann::json& data) {

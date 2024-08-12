@@ -1,4 +1,4 @@
-#include <Zola/network/URL.hpp>
+#include <Zola/Network/URL.hpp>
 
 //! Curl write function callback
 size_t Zola::Network::URL::write_callback(char *ptr, size_t size, size_t n, void *data) {

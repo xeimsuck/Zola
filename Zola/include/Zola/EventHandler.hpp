@@ -11,17 +11,24 @@
 #ifndef ZOLA_EVENTHANDLER_HPP
 #define ZOLA_EVENTHANDLER_HPP
 
-#include "objects/Update.hpp"
-#include "objects/Error.hpp"
-#include "objects/Message.hpp"
-#include "objects/User.hpp"
-#include "objects/Chat.hpp"
+#include <iostream>
+#include <functional>
+#include "Objects/Update.hpp"
+#include "Objects/Error.hpp"
+#include <Zola/Handlers/MessageHandler.hpp>
 
 namespace Zola {
     class EventHandler {
     public:
-        void UpdateHandler(const Objects::Update& update);
-        void ErrorHandler(const Objects::Error& error);
+        void updateHandler(const Objects::Update& update);
+        void errorHandler(const Objects::Error& error);
+        Handlers::MessageHandler& getMessageHandler();
+        Handlers::MessageHandler& getCommandHandler();
+        Handlers::MessageHandler& getEditedMessageHandler();
+    private:
+        Handlers::MessageHandler messageHandler;
+        Handlers::MessageHandler commandHandler;
+        Handlers::MessageHandler editedMessageHandler;
     };
 }
 

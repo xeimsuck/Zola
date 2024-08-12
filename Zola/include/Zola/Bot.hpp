@@ -17,8 +17,8 @@
 
 #include <nlohmann/json.hpp>
 
-#include <Zola/EventHandler.hpp>
-#include <Zola/network/URL.hpp>
+#include "EventHandler.hpp"
+#include "Network/URL.hpp"
 
 template<typename T>
 concept is_string = std::convertible_to<T, std::string>;
