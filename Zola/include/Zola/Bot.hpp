@@ -18,7 +18,7 @@
 #include <nlohmann/json.hpp>
 
 #include "EventHandler.hpp"
-#include "Network/URL.hpp"
+#include "API.hpp"
 
 template<typename T>
 concept is_string = std::convertible_to<T, std::string>;
@@ -43,7 +43,7 @@ namespace Zola {
     private:
         const std::string token;
         EventHandler eventHandler;
-        Network::URL url;
+        API api;
     };
 }
 

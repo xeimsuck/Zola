@@ -11,7 +11,7 @@ Zola::Bot& Zola::Bot::init(std::string _token) {
 //! Private constructor
 Zola::Bot::Bot(std::string _token) :
                 token(std::move(_token)),
-                url(std::format("https://api.telegram.org/bot{}/getUpdates", token)) {
+                api(token) {
 }
 
 //! Return a bot token
@@ -28,11 +28,7 @@ Zola::EventHandler& Zola::Bot::getEventHandler() {
 void Zola::Bot::run() {
     int updateOffset = 0;
     while (true){
-        auto updates = json::parse(
-                url.makeRequest({
-                    {"offset", std::to_string(updateOffset)}
-                })
-        );
+        auto updates = json::parse(api.getUpdates(updateOffset));
         if(!updates["ok"]){
             eventHandler.errorHandler(Objects::Error(updates["error_code"], updates["description"]));
         }
