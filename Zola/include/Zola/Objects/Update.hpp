@@ -18,7 +18,7 @@
 namespace Zola::Objects{
     struct Update{
         explicit Update(const nlohmann::json& data);
-        int update_id;
+        long update_id;
         std::optional<Message> message;
         std::optional<Message> edited_message;
     };

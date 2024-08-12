@@ -21,8 +21,8 @@
 namespace Zola::Objects{
     struct Message {
         explicit Message(const nlohmann::json& data);
-        int message_id=0;
-        int date;
+        long message_id=0;
+        long date;
         Chat chat;
         std::optional<std::string> text;
         std::optional<User> from;

@@ -15,7 +15,7 @@
 
 namespace Zola::Objects{
     struct Error {
-        int error_code;
+        long error_code;
         std::string description;
     };
 }

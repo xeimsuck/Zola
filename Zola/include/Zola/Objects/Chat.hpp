@@ -18,7 +18,7 @@
 namespace Zola::Objects {
     struct Chat {
         explicit Chat(const nlohmann::json& data);
-        int id;
+        long id;
         std::optional<std::string> title;
         std::optional<std::string> username;
         std::optional<std::string> first_name;

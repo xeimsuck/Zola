@@ -18,7 +18,7 @@
 namespace Zola::Objects{
     struct User {
         explicit User(const nlohmann::json& data);
-        int id;
+        long id;
         bool is_bot;
         std::string first_name;
         std::optional<std::string> last_name;
