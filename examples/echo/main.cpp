@@ -4,20 +4,22 @@
 using namespace Zola;
 
 int main(int argc, char*argv[]){
-    decltype(auto) bot = Zola::Bot::init("YOUR_BOT_TOKEN");
+    decltype(auto) bot = Bot::init("YOUR_BOT_TOKEN");
     bot.getEventHandler().getMessageHandler().addAny([&](const Objects::Message& msg){
-        if(msg.text.has_value()){
+        if(msg.text){
             bot.getAPI().sendMessage(msg.text.value(), msg.chat.id);
-        } else if(msg.sticker.has_value()){
+        } else if(msg.sticker){
             bot.getAPI().sendSticker(msg.sticker->file_id, msg.chat.id);
-        } else if(msg.video.has_value()){
+        } else if(msg.video){
             bot.getAPI().sendVideo(msg.video->file_id, msg.chat.id, msg.caption);
+        } else if(msg.photo){
+            bot.getAPI().sendPhoto(msg.photo.value().front().file_id, msg.chat.id, msg.caption);
         }
     });
     try {
         bot.run();
     } catch (const std::exception& ex){
-        std::cout << ex.what() << "\n";
+        std::cerr << ex.what();
         return 1;
     }
     return 0;
