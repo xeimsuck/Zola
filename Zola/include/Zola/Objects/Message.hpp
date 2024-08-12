@@ -17,6 +17,7 @@
 #include <nlohmann/json.hpp>
 #include "Chat.hpp"
 #include "User.hpp"
+#include "Sticker.hpp"
 
 namespace Zola::Objects{
     struct Message {
@@ -45,7 +46,7 @@ namespace Zola::Objects{
         std::optional<int> forward_date;
 
         //! Sticker
-        std::optional<int> sticker;
+        std::optional<Sticker> sticker;
         //TODO: optional param - reply_to_message
     };
 }

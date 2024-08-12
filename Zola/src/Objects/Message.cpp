@@ -15,4 +15,7 @@ Zola::Objects::Message::Message(const nlohmann::json& data) : chat(data["chat"])
     if(data.contains("forward_date")){
         forward_date = data["forward_date"];
     }
+    if(data.contains("sticker")){
+        sticker = Sticker(data["sticker"]);
+    }
 }
