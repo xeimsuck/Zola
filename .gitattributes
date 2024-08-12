@@ -1,2 +1,3 @@
 # vendored
 ./*.css linguist-vendored
+./Zola/lib/* linguist-vendored
