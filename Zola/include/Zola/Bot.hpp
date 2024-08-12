@@ -14,10 +14,11 @@
 
 #include <iostream>
 #include <string>
-#include <curl/curl.h>
+
 #include <nlohmann/json.hpp>
-#include <Zola/objects/Update.hpp>
-#include <Zola/objects/Error.hpp>
+
+#include <Zola/EventHandler.hpp>
+#include <Zola/network/URL.hpp>
 
 template<typename T>
 concept is_string = std::convertible_to<T, std::string>;
@@ -25,7 +26,7 @@ concept is_string = std::convertible_to<T, std::string>;
 namespace Zola {
     class Bot {
     public:
-        ~Bot();
+        ~Bot() = default;
         Bot(const Bot& bot) = delete;
         Bot(Bot&& bot) = delete;
         Bot& operator=(const Bot& r) = delete;
@@ -35,19 +36,14 @@ namespace Zola {
 
     public:
         static Bot& init(std::string token);
-        [[nodiscard]]const std::string& getToken() const;
         void run();
-    private:
-        nlohmann::json getUpdates(int offset=0);
-        void updateHandler(const Objects::Update& update);
-        void errorHandler(const Objects::Error& error);
-        static size_t write_callback(char* ptr, size_t size, size_t n, void* data);
+        [[nodiscard]] const std::string& getToken() const;
+        [[nodiscard]] Zola::EventHandler& getEventHandler();
 
     private:
         const std::string token;
-        std::string getUpdatesURL;
-        std::string updateBuffer;
-        CURL* curlHandle = nullptr;
+        EventHandler eventHandler;
+        Network::URL url;
     };
 }
 
