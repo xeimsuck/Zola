@@ -14,11 +14,13 @@
 
 #include <string>
 #include <optional>
+#include <vector>
 #include <nlohmann/json.hpp>
 #include "Chat.hpp"
 #include "User.hpp"
 #include "Sticker.hpp"
 #include "Video.hpp"
+#include "PhotoSize.hpp"
 
 namespace Zola::Objects{
     struct Message {
@@ -54,6 +56,12 @@ namespace Zola::Objects{
 
         //! Caption for the animation, audio, document, paid media, photo, video or voice
         std::optional<std::string> caption;
+
+        //! The unique identifier of a media message group this message belongs to
+        std::optional<std::string> media_group_id;
+
+        //! Message is a photo, available sizes of the photo
+        std::optional<std::vector<PhotoSize>> photo;
 
         //TODO: optional param - reply_to_message
     };
