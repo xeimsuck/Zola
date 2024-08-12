@@ -15,6 +15,9 @@ Objects::Video::Video(const nlohmann::json &data) {
     if(data.contains("file_name")){
         file_name = data["file_name"];
     }
+    if(data.contains("thumbnail")){
+        thumbnail = PhotoSize(data["thumbnail"]);
+    }
     if(data.contains("mime_type")){
         mime_type = data["mime_type"];
     }

@@ -4,7 +4,6 @@
     @author Xeim
     @version 0.1
     @data 12.08.24
-    @warning not finished
 
     This struct contains information about video
  */
@@ -16,9 +15,11 @@
 #include <string>
 #include <optional>
 #include <nlohmann/json.hpp>
+#include "PhotoSize.hpp"
 
 namespace Zola::Objects {
     struct Video {
+        //! Constructor parse json message
         explicit Video(const nlohmann::json& data);
 
         //! Identifier for this file, which can be used to download or reuse the file
@@ -36,7 +37,8 @@ namespace Zola::Objects {
         //! Duration of the video in seconds as defined by the sender
         long duration;
 
-        //! todo add optional tumbnail (PhotoSize)
+        //! Video thumbnail
+        std::optional<PhotoSize> thumbnail;
 
         //! Original filename as defined by the sender
         std::optional<std::string> file_name;
