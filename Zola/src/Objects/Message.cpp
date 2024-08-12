@@ -1,6 +1,5 @@
 #include <Zola/Objects/Message.hpp>
 
-//! Message object constructor
 Zola::Objects::Message::Message(const nlohmann::json& data) : chat(data["chat"]) {
     message_id = data["message_id"];
     date = data["date"];
