@@ -4,9 +4,13 @@
 using namespace Zola;
 
 int main(int argc, char*argv[]){
-    decltype(auto) bot = Zola::Bot::init("YOUR TOKEN");
+    decltype(auto) bot = Zola::Bot::init("YOUR_BOT_TOKEN");
     bot.getEventHandler().getMessageHandler().addAny([&](const Objects::Message& msg){
-        bot.getAPI().sendMessage(msg.text.value_or(""), msg.chat.id);
+        if(msg.text.has_value()){
+            bot.getAPI().sendMessage(msg.text.value(), msg.chat.id);
+        } else if(msg.sticker.has_value()){
+            bot.getAPI().sendSticker(msg.sticker->file_id, msg.chat.id);
+        }
     });
     try {
         bot.run();
