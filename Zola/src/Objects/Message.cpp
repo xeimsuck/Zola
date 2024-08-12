@@ -27,7 +27,7 @@ Zola::Objects::Message::Message(const nlohmann::json& data) : chat(data["chat"])
     if(data.contains("photo")){
         photo = std::make_optional<std::vector<PhotoSize>>();
         for(decltype(auto) photoSize : data["photo"]){
-            photo->push_back(PhotoSize(photoSize));
+            photo->emplace_back(photoSize);
         }
     }
 }
