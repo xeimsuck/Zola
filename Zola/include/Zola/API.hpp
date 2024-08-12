@@ -32,7 +32,8 @@ namespace Zola {
     public:
         std::string getUpdates(long offset=0);
         void sendMessage(const std::string& text, long chat_id);
-        void sendSticker(const std::string& file_id, long chat_id);
+        void sendSticker(const std::string& sticker, long chat_id);
+        void sendVideo(const std::string& video, long chat_id, const std::optional<std::string>& caption);
     private:
         static size_t write_callback(char* ptr, size_t size, size_t n, void* data);
 

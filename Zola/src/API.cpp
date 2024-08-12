@@ -64,7 +64,19 @@ void Zola::API::sendMessage(const std::string &text, long chat_id) {
  * @param chat_id ID of chat
  */
 void Zola::API::sendSticker(const std::string& sticker, long chat_id) {
-    std::string sendMessageURL = url + std::format("/sendSticker?sticker={}&chat_id={}", sticker, chat_id);
-    curl_easy_setopt(handle, CURLOPT_URL, sendMessageURL.c_str());
+    std::string sendStickerURL = url + std::format("/sendSticker?sticker={}&chat_id={}", sticker, chat_id);
+    curl_easy_setopt(handle, CURLOPT_URL, sendStickerURL.c_str());
+    curl_easy_perform(handle);
+}
+
+/*!
+ * Send video to chat
+ * @param video file_id or http url
+ * @param chat_id ID of chat
+ */
+void Zola::API::sendVideo(const std::string &video, long chat_id, const std::optional<std::string>& caption) {
+    std::string sendVideoURL = url + std::format("/sendVideo?video={}&chat_id={}", video, chat_id);
+    if(caption.has_value()) sendVideoURL+=std::format("&capture={}", caption.value());
+    curl_easy_setopt(handle, CURLOPT_URL, sendVideoURL.c_str());
     curl_easy_perform(handle);
 }
