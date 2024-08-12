@@ -22,9 +22,16 @@ size_t Zola::API::write_callback(char *ptr, size_t size, size_t n, void *data) {
 }
 
 //! Return getUpdates method
-std::string Zola::API::getUpdates(int offset) {
+std::string Zola::API::getUpdates(long offset) {
     std::string getUpdateURL = url + std::format("/getUpdates?offset={}", offset);
     curl_easy_setopt(handle, CURLOPT_URL, getUpdateURL.c_str());
     curl_easy_perform(handle);
     return buffer;
+}
+
+//! Send message to chat
+void Zola::API::sendMessage(const std::string &text, long chat_id) {
+    std::string sendMessageURL = url + std::format("/sendMessage?text={}&chat_id={}", text, chat_id);
+    curl_easy_setopt(handle, CURLOPT_URL, sendMessageURL.c_str());
+    curl_easy_perform(handle);
 }
