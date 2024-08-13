@@ -10,7 +10,7 @@ using namespace Zola;
 API::API(const std::string& token) : url(std::format("https://api.telegram.org/bot{}", token)) {
     curl_global_init(CURL_GLOBAL_ALL);
     handle = curl_easy_init();
-    curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_callback);
+    curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, writeCallback);
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &buffer);
 }
 
@@ -30,7 +30,7 @@ API::~API() {
  * @param data buffer
  * @return count of writen bytes
  */
-size_t API::write_callback(char *ptr, size_t size, size_t n, void *data) {
+size_t API::writeCallback(char *ptr, size_t size, size_t n, void *data) {
     auto user_data = reinterpret_cast<std::string*>(data);
     user_data->clear();
     user_data->append(ptr, size*n);
@@ -52,11 +52,24 @@ std::string API::fillSpaces(const std::string &str) {
     return result;
 }
 
+/*!
+ * Parse parameters into string
+ * @param params Parameters
+ * @return Parsed parameters
+ */
+std::string API::parseParameters(const Zola::API::parameters& params) {
+    std::string result;
+    for(decltype(auto) param : params){
+        result+=std::format("{}={}&", param.first, fillSpaces(param.second));
+    }
+    return result;
+}
+
 
 /*!
  * Return all updates with offset bigger than "offset"
- * @param offset
- * @return json unparsed string
+ * @param offset offset
+ * @return Json unparsed string
  */
 std::string API::getUpdates(long offset) {
     std::string getUpdateURL = url + std::format("/getUpdates?offset={}", offset);

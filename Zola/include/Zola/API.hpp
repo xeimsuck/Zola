@@ -37,8 +37,9 @@ namespace Zola {
         void sendPhoto(const std::string& photo, long chat_id, const std::optional<std::string>& caption);
         void sendVoice(const std::string& voice, long chat_id, const std::optional<std::string>& caption);
     private:
-        static size_t write_callback(char* ptr, size_t size, size_t n, void* data);
+        static size_t writeCallback(char* ptr, size_t size, size_t n, void* data);
         static std::string fillSpaces(const std::string& str);
+        static std::string parseParameters(const parameters& params);
 
     private:
         const std::string url;
