@@ -1,11 +1,13 @@
 /*!
-    \file
-    \brief Update object
-    \author Xeim
-    \version 0.1
-    \data 09.08.24
+    @file
+    @brief Update object
+    @author Xeim
+    @version 0.2
+    @data 13.08.24
+    @warning not finished
 
-    This struct contains information about update
+    This object represents an incoming update.
+    At most one of the optional parameters can be present in any given update.
  */
 
 #ifndef ZOLA_OBJECTS_UPDATE_HPP
@@ -49,6 +51,19 @@ namespace Zola::Objects{
          * that are either unavailable or not actively used by your bot.
          */
         std::optional<Message> edited_message;
+
+        /*!
+         * @brief New incoming channel post of any kind - text, photo, sticker, etc.
+         */
+        std::optional<Message> channel_post;
+
+        /*!
+         * @brief New version of a channel post that is known to the bot and was edited.
+         *
+         * This update may at times be triggered by changes to message fields
+         * that are either unavailable or not actively used by your bot.
+         */
+        std::optional<Message> edited_channel_post;
 
         /*!
          * @brief New incoming callback query.
