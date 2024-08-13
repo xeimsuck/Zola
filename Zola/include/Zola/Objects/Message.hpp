@@ -21,6 +21,7 @@
 #include "Sticker.hpp"
 #include "Video.hpp"
 #include "PhotoSize.hpp"
+#include "Voice.hpp"
 
 namespace Zola::Objects{
     struct Message {
@@ -63,6 +64,9 @@ namespace Zola::Objects{
         //! Message is a photo, available sizes of the photo
         std::optional<std::vector<PhotoSize>> photo;
 
+        //! Message is a voice message, information about the file
+        std::optional<Voice> voice;
+        
         //TODO: optional param - reply_to_message
     };
 }
