@@ -30,4 +30,10 @@ Zola::Objects::Message::Message(const nlohmann::json& data) : chat(data["chat"])
     if(data.contains("forward_date")){
         forward_date = data["forward_date"];
     }
+    if(data.contains("web_app_data")){
+        web_app_data = WebAppInfo(data["web_app_data"]);
+    }
+    if(data.contains("reply_markup")){
+        reply_markup = InlineKeyboardMarkup(data["reply_markup"]);
+    }
 }

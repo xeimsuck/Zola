@@ -6,7 +6,7 @@
     \data 09.08.24
     \warning is not finished
 
-    This struct contains information about message
+    This object represents a message.
  */
 
 #ifndef ZOLA_OBJECTS_MESSAGE_HPP
@@ -22,6 +22,8 @@
 #include "Video.hpp"
 #include "PhotoSize.hpp"
 #include "Voice.hpp"
+#include "WebAppInfo.hpp"
+#include "InlineKeyboardMarkup.hpp"
 
 namespace Zola::Objects{
     struct Message {
@@ -66,8 +68,20 @@ namespace Zola::Objects{
 
         //! Message is a voice message, information about the file
         std::optional<Voice> voice;
-        
-        //TODO: optional param - reply_to_message
+
+        /*!
+         * @brief Service message: data sent by a Web App
+         */
+        std::optional<WebAppInfo> web_app_data;
+
+        /*!
+         * @brief Inline keyboard attached to the message.
+         *
+         * login_url buttons are represented as ordinary url buttons.
+         */
+        std::optional<InlineKeyboardMarkup> reply_markup;
+
+        //!@todo: optional param - reply_to_message
     };
 }
 
