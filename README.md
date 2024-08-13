@@ -24,7 +24,8 @@ cd build
 ```shell
 cmake ..
 make
-# make install soon
+sudo make install
+# if possible use -j4 with make 
 ```
 ## Project examples
 ### Echo bot
