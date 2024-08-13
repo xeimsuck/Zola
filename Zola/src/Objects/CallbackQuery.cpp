@@ -10,7 +10,7 @@ Objects::CallbackQuery::CallbackQuery(const nlohmann::json &data) {
         inline_message_id = data["inline_message_id"];
     }
     if(data.contains("data")){
-        data = data["data"];
+        this->data = data["data"];
     }
     if(data.contains("game_short_name")){
         game_short_name = data["game_short_name"];
