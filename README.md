@@ -31,21 +31,22 @@ sudo make install
 ### Echo bot
 ```c++
 #include <Zola/Zola.hpp>
+
 using namespace Zola;
 
 int main(int argc, char*argv[]){
     // Create a bot with your token
-    decltype(auto) bot = Zola::Bot::init("YOUR_BOT_TOKEN");
+    auto& bot = Bot::init("7047048031:AAEbb5yTcq5Gd86ecYjnsUg2Qore3pgAAzg");
     // Add handler on any messages
     bot.getEventHandler().getMessageHandler().addAny([&](const Objects::Message& msg){
         // Send a message which bot received
-        bot.getAPI().sendMessage(msg.text.value_or(""), msg.chat.id);
+        bot.getAPI().sendMessage(msg.text.value_or("It is not message"), msg.chat.id);
     });
     try {
         // Run a bot
         bot.run();
     } catch (const std::exception& ex){
-        std::cout << ex.what() << "\n";
+        std::cerr << ex.what();
         return 1;
     }
     return 0;
