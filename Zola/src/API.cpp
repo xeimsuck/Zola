@@ -75,6 +75,7 @@ void API::sendSticker(const std::string& sticker, long chat_id) {
  * Send video to chat
  * @param video file_id or http url
  * @param chat_id ID of chat
+ * @param caption Video message caption
  */
 void API::sendVideo(const std::string &video, long chat_id, const std::optional<std::string>& caption) {
     std::string sendVideoURL = url + std::format("/sendVideo?video={}&chat_id={}", video, chat_id);
@@ -83,8 +84,27 @@ void API::sendVideo(const std::string &video, long chat_id, const std::optional<
     curl_easy_perform(handle);
 }
 
+/*!
+ *  Send photo to chat
+ * @param photo file_id or http url
+ * @param chat_id ID of chat
+ * @param caption Photo message caption
+ */
 void API::sendPhoto(const std::string &photo, long chat_id, const std::optional<std::string> &caption) {
     std::string sendPhotoURL = url + std::format("/sendPhoto?photo={}&chat_id={}", photo, chat_id);
+    if(caption.has_value()) sendPhotoURL+=std::format("&capture={}", caption.value());
+    curl_easy_setopt(handle, CURLOPT_URL, sendPhotoURL.c_str());
+    curl_easy_perform(handle);
+}
+
+/*!
+ * Send voice to chat
+ * @param voice file_id or http url
+ * @param chat_id ID of chat
+ * @param caption Voice message caption
+ */
+void API::sendVoice(const std::string &voice, long chat_id, const std::optional<std::string> &caption) {
+    std::string sendPhotoURL = url + std::format("/sendVoice?voice={}&chat_id={}", voice, chat_id);
     if(caption.has_value()) sendPhotoURL+=std::format("&capture={}", caption.value());
     curl_easy_setopt(handle, CURLOPT_URL, sendPhotoURL.c_str());
     curl_easy_perform(handle);

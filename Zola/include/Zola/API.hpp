@@ -35,6 +35,7 @@ namespace Zola {
         void sendSticker(const std::string& sticker, long chat_id);
         void sendVideo(const std::string& video, long chat_id, const std::optional<std::string>& caption);
         void sendPhoto(const std::string& photo, long chat_id, const std::optional<std::string>& caption);
+        void sendVoice(const std::string& voice, long chat_id, const std::optional<std::string>& caption);
     private:
         static size_t write_callback(char* ptr, size_t size, size_t n, void* data);
 
