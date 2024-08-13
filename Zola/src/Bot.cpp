@@ -1,31 +1,45 @@
 #include "Zola/Bot.hpp"
 
+using namespace Zola;
 using namespace nlohmann;
 
-//! Bot initialization
-Zola::Bot& Zola::Bot::init(std::string _token) {
+/*!
+ * Singleton initialization
+ * @param _token Bot token
+ * @return Singleton bot
+ */
+Bot& Zola::Bot::init(std::string _token) {
     static Bot bot(std::move(_token));
     return bot;
 }
 
-//! Private constructor
-Zola::Bot::Bot(std::string _token) :
+/*!
+ * Initialization bot
+ * @param _token Bot token
+ */
+Bot::Bot(std::string _token) :
                 token(std::move(_token)),
                 api(token) {
 }
 
-//! Return a bot token
-const std::string& Zola::Bot::getToken() const {
+/*!
+ * @return Bot Token
+ */
+const std::string& Bot::getToken() const {
     return token;
 }
 
-//! Return a event handler
-Zola::EventHandler& Zola::Bot::getEventHandler() {
+/*!
+ * @return Bot EventHandler
+ */
+EventHandler& Bot::getEventHandler() {
     return eventHandler;
 }
 
-//! Return a api
-Zola::API &Zola::Bot::getAPI() {
+/*!
+ * @return Bot API
+ */
+API &Bot::getAPI() {
     return api;
 }
 
@@ -33,8 +47,8 @@ Zola::API &Zola::Bot::getAPI() {
  * Run a bot using a token
  * @param delay delay between getUpdates methods
  */
-void Zola::Bot::run(const int delay) {
-    int updateOffset = 0;
+void Bot::run(const int delay) {
+    long updateOffset = 0;
     while (true){
         auto updates = json::parse(api.getUpdates(updateOffset));
         if(!updates["ok"]){
