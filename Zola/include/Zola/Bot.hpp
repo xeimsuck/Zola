@@ -16,6 +16,8 @@
 #include <string>
 
 #include <nlohmann/json.hpp>
+#include <chrono>
+#include <thread>
 
 #include "EventHandler.hpp"
 #include "API.hpp"
@@ -36,7 +38,7 @@ namespace Zola {
 
     public:
         static Bot& init(std::string token);
-        void run();
+        void run(int delay=500);
         [[nodiscard]] const std::string& getToken() const;
         [[nodiscard]] Zola::EventHandler& getEventHandler();
         [[nodiscard]] Zola::API& getAPI();

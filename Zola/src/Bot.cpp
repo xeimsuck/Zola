@@ -30,7 +30,7 @@ Zola::API &Zola::Bot::getAPI() {
 }
 
 //! Run a bot using a bot token
-void Zola::Bot::run() {
+void Zola::Bot::run(const int delay) {
     int updateOffset = 0;
     while (true){
         auto updates = json::parse(api.getUpdates(updateOffset));
@@ -42,6 +42,6 @@ void Zola::Bot::run() {
             updateOffset = update.update_id+1;
             eventHandler.updateHandler(update);
         });
-        sleep(1);
+        std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     }
 }
