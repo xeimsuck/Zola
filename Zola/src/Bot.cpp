@@ -29,7 +29,10 @@ Zola::API &Zola::Bot::getAPI() {
     return api;
 }
 
-//! Run a bot using a bot token
+/*!
+ * Run a bot using a token
+ * @param delay delay between getUpdates methods
+ */
 void Zola::Bot::run(const int delay) {
     int updateOffset = 0;
     while (true){
