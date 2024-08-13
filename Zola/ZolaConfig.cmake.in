@@ -1,0 +1,7 @@
+set(ZOLA_VERSION 0.2)
+
+@PACKAGE_INIT@
+
+set_and_check(ZOLA_INCLUDE_DIR "@PACKAGE_INCLUDE_INSTALL_DIR@")
+
+check_required_components(Zola)
