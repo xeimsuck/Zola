@@ -38,6 +38,7 @@ namespace Zola {
         void sendVoice(const std::string& voice, long chat_id, const std::optional<std::string>& caption);
     private:
         static size_t write_callback(char* ptr, size_t size, size_t n, void* data);
+        static std::string fillSpaces(const std::string& str);
 
     private:
         const std::string url;

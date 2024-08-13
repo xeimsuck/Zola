@@ -1,4 +1,5 @@
 #include <Zola/API.hpp>
+#include <iostream>
 
 using namespace Zola;
 
@@ -38,6 +39,21 @@ size_t API::write_callback(char *ptr, size_t size, size_t n, void *data) {
 
 
 /*!
+ * Set %20 instead of spaces
+ * @param str
+ * @return result
+ */
+std::string API::fillSpaces(const std::string &str) {
+    std::string result;
+    for(auto c : str){
+        if(c==' ') result += "%20";
+        else result.push_back(c);
+    }
+    return result;
+}
+
+
+/*!
  * Return all updates with offset bigger than "offset"
  * @param offset
  * @return json unparsed string
@@ -54,8 +70,8 @@ std::string API::getUpdates(long offset) {
  * @param text Text message
  * @param chat_id ID of chat
  */
-void API::sendMessage(const std::string &text, long chat_id) {
-    std::string sendMessageURL = url + std::format("/sendMessage?text={}&chat_id={}", text, chat_id);
+void API::sendMessage(const std::string& text, long chat_id) {
+    std::string sendMessageURL = url + std::format("/sendMessage?text={}&chat_id={}", fillSpaces(text), chat_id);
     curl_easy_setopt(handle, CURLOPT_URL, sendMessageURL.c_str());
     curl_easy_perform(handle);
 }
@@ -79,7 +95,7 @@ void API::sendSticker(const std::string& sticker, long chat_id) {
  */
 void API::sendVideo(const std::string &video, long chat_id, const std::optional<std::string>& caption) {
     std::string sendVideoURL = url + std::format("/sendVideo?video={}&chat_id={}", video, chat_id);
-    if(caption.has_value()) sendVideoURL+=std::format("&capture={}", caption.value());
+    if(caption.has_value()) sendVideoURL+=std::format("&capture={}", fillSpaces(caption.value()));;
     curl_easy_setopt(handle, CURLOPT_URL, sendVideoURL.c_str());
     curl_easy_perform(handle);
 }
@@ -92,7 +108,7 @@ void API::sendVideo(const std::string &video, long chat_id, const std::optional<
  */
 void API::sendPhoto(const std::string &photo, long chat_id, const std::optional<std::string> &caption) {
     std::string sendPhotoURL = url + std::format("/sendPhoto?photo={}&chat_id={}", photo, chat_id);
-    if(caption.has_value()) sendPhotoURL+=std::format("&capture={}", caption.value());
+    if(caption.has_value()) sendPhotoURL+=std::format("&capture={}", fillSpaces(caption.value()));
     curl_easy_setopt(handle, CURLOPT_URL, sendPhotoURL.c_str());
     curl_easy_perform(handle);
 }
@@ -105,7 +121,7 @@ void API::sendPhoto(const std::string &photo, long chat_id, const std::optional<
  */
 void API::sendVoice(const std::string &voice, long chat_id, const std::optional<std::string> &caption) {
     std::string sendPhotoURL = url + std::format("/sendVoice?voice={}&chat_id={}", voice, chat_id);
-    if(caption.has_value()) sendPhotoURL+=std::format("&capture={}", caption.value());
+    if(caption.has_value()) sendPhotoURL+=std::format("&capture={}", fillSpaces(caption.value()));
     curl_easy_setopt(handle, CURLOPT_URL, sendPhotoURL.c_str());
     curl_easy_perform(handle);
 }
