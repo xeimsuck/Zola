@@ -94,7 +94,7 @@ void API::sendMessage(const std::string& text,
     parameters params;
     params.emplace_back("text", text);
     params.emplace_back("chat_id", std::to_string(chat_id));
-    if(reply_markup) params.emplace_back("reply_markup", reply_markup->toJson());
+    if(reply_markup) params.emplace_back("reply_markup", to_string(reply_markup->toJson()));
 
     std::string sendMessageURL = url + "/sendMessage" + parseParameters(params);
 
