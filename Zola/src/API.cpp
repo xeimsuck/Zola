@@ -255,4 +255,9 @@ void API::editMessage(const std::string &text, const std::optional<std::string> 
     if(reply_markup) params.emplace_back("reply_markup", to_string(reply_markup->toJson()));
     if(inline_message_id) params.emplace_back("inline_message_id", inline_message_id.value());
     if(business_connection_id) params.emplace_back("business_connection_id", business_connection_id.value());
+
+    std::string editMessageUrl = tgUrl + "/answerCallbackQuery" + parseParameters(params);
+
+    curl_easy_setopt(handle, CURLOPT_URL, editMessageUrl.c_str());
+    curl_easy_perform(handle);
 }
