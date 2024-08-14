@@ -46,13 +46,18 @@ namespace Zola {
         void sendVoice(const std::string& voice,
                        long chat_id,
                        const std::optional<std::string>& caption = std::nullopt);
+        void answerCallbackQuery(const std::string& callback_query_id,
+                                 const std::optional<std::string>& text = std::nullopt,
+                                 const std::optional<bool>& show_alert = std::nullopt,
+                                 const std::optional<std::string>& url = std::nullopt,
+                                 const std::optional<int>& cache_time = std::nullopt);
     private:
         static size_t writeCallback(char* ptr, size_t size, size_t n, void* data);
         static std::string correctParameter(const std::string& str);
         static std::string parseParameters(const parameters& params);
 
     private:
-        const std::string url;
+        const std::string tgUrl;
         std::string buffer;
         CURL* handle = nullptr;
     };
