@@ -3,7 +3,7 @@
 using namespace Zola;
 
 int main(int argc, char*argv[]){
-    decltype(auto) bot = Bot::init("7047048031:AAEbb5yTcq5Gd86ecYjnsUg2Qore3pgAAzg");
+    decltype(auto) bot = Bot::init("YOUR_BOT_TOKEN");
     bot.getEventHandler().getMessageHandler().addAny([&](const Objects::Message& msg){
         if(msg.text){
             bot.getAPI().sendMessage(msg.text.value(), msg.chat.id);
