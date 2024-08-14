@@ -19,7 +19,7 @@ void EventHandler::updateHandler(const Objects::Update &update) {
     } else if(update.edited_channel_post) {
         editedChannelPostHandler(update.edited_channel_post.value());
     } else if(update.callback_query){
-
+        callbackQueryHandler(update.callback_query.value());
     }
 }
 
