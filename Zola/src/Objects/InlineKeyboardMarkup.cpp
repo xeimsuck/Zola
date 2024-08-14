@@ -3,6 +3,7 @@
 using namespace Zola;
 using namespace Zola::Objects;
 using namespace nlohmann;
+using std::vector;
 
 InlineKeyboardMarkup::InlineKeyboardMarkup(const json &data) {
     for(decltype(auto) row : data){
@@ -11,6 +12,10 @@ InlineKeyboardMarkup::InlineKeyboardMarkup(const json &data) {
             inline_keyboard.back().emplace_back(button);
         }
     }
+}
+
+InlineKeyboardMarkup::InlineKeyboardMarkup(vector<vector<InlineKeyboardButton>> keyboard)
+                : inline_keyboard(std::move(keyboard)){
 }
 
 InlineKeyboardMarkup::operator nlohmann::json() const {

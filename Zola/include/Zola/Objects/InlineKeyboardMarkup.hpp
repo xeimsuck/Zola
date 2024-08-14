@@ -26,13 +26,18 @@ namespace Zola::Objects {
           * @brief Parse json to InlineKeyboardMarkup
           * @param data Json markup
           */
-         explicit InlineKeyboardMarkup(const nlohmann::json& data);
+        explicit InlineKeyboardMarkup(const nlohmann::json& data);
+
+         /*!
+          * @brief Initialize inline_keyboard
+          */
+        explicit InlineKeyboardMarkup(std::vector<std::vector<InlineKeyboardButton>> keyboard);
 
          /*!
           * @brief Cast to json
           * @return
          */
-         explicit operator nlohmann::json() const;
+        explicit operator nlohmann::json() const;
 
         /*!
          * @brief Parse InlineKeyboardMarkup to json
