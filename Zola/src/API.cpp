@@ -220,3 +220,39 @@ void API::answerCallbackQuery(const std::string &callback_query_id, const std::o
     curl_easy_setopt(handle, CURLOPT_URL, answerCallbackQueryURL.c_str());
     curl_easy_perform(handle);
 }
+
+/*!
+ * @brief Use this method to edit text and game messages.
+ * @param text New text of the message, 1-4096 characters after entities parsing
+ * @param chat_id Required if inline_message_id is not specified.
+ * Unique identifier for the target chat or username of the target channel.
+ * @param message_id Required if inline_message_id is not specified.
+ * Identifier of the message to edit
+ * @param reply_markup Inline keyboard
+ * @param inline_message_id Required if chat_id and message_id are
+ * not specified. Identifier of the inline message
+ * @param business_connection_id Unique identifier of the business
+ * connection on behalf of which the message to be edited was sent
+ * @param parse_mod Mode for parsing entities in the message text.
+ * @warning has not "entities" and "link_preview_options" arguments
+ *
+ * On success, if the edited message is not an inline message,
+ * the edited Message is returned, otherwise True is returned.
+ * Note that business messages that were not sent by the bot and do
+ * not contain an inline keyboard can only be edited within 48 hours
+ * from the time they were sent.
+ */
+void API::editMessage(const std::string &text, const std::optional<std::string> &chat_id,
+                      const std::optional<std::string> &message_id,
+                      const std::optional<Objects::InlineKeyboardMarkup> &reply_markup,
+                      const std::optional<std::string> &inline_message_id,
+                      const std::optional<std::string> &business_connection_id,
+                      const std::optional<std::string> &parse_mod) {
+    parameters params;
+    params.emplace_back("text", text);
+    if(chat_id) params.emplace_back("chat_id", chat_id.value());
+    if(message_id) params.emplace_back("message_id", message_id.value());
+    if(reply_markup) params.emplace_back("reply_markup", to_string(reply_markup->toJson()));
+    if(inline_message_id) params.emplace_back("inline_message_id", inline_message_id.value());
+    if(business_connection_id) params.emplace_back("business_connection_id", business_connection_id.value());
+}
