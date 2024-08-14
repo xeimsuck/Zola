@@ -1,7 +1,12 @@
 #include <Zola/Objects/Chat.hpp>
 
-Zola::Objects::Chat::Chat(const nlohmann::json& data){
+using namespace Zola;
+using namespace Zola::Objects;
+using namespace nlohmann;
+
+Chat::Chat(const json& data){
     id = data["id"];
+    type = data["type"];
     if(data.contains("title")){
         title = data["title"];
     }
@@ -14,7 +19,23 @@ Zola::Objects::Chat::Chat(const nlohmann::json& data){
     if(data.contains("last_name")){
         last_name = data["last_name"];
     }
-    if(data.contains("all_members_are_administrators")){
-        all_members_are_administrators = data["all_members_are_administrators"];
+    if(data.contains("is_forum")){
+        is_forum = data["is_forum"];
     }
+}
+
+Chat::operator nlohmann::json() const {
+    return toJson();
+}
+
+nlohmann::json Chat::toJson() const {
+    json parsed;
+    parsed["id"] = id;
+    parsed["type"] = type;
+    if(title) parsed["title"] = title.value();
+    if(username) parsed["username"] = username.value();
+    if(first_name) parsed["first_name"] = first_name.value();
+    if(last_name) parsed["last_name"] = last_name.value();
+    if(is_forum) parsed["is_forum"] = is_forum.value();
+    return parsed;
 }
