@@ -29,8 +29,18 @@ namespace Zola::Objects {
          * @brief Parse json
          * @param data Json LogicUrl
          */
-        LoginUrl(const nlohmann::json& data);
+        explicit LoginUrl(const nlohmann::json& data);
 
+        /*!
+         * @brief Cast to json
+         */
+        explicit operator nlohmann::json() const;
+
+        /*!
+         * Parse LoginUrl to json format
+         * @return json
+         */
+        nlohmann::json toJson() const;
 
         /*!
          * @brief An HTTPS URL to be opened with user authorization data.

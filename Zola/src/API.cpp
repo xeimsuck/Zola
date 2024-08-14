@@ -83,8 +83,11 @@ std::string API::getUpdates(long offset) {
  * @param text Text message
  * @param chat_id ID of chat
  */
-void API::sendMessage(const std::string& text, long chat_id) {
+void API::sendMessage(const std::string& text,
+                      long chat_id,
+                      const std::optional<Objects::InlineKeyboardMarkup>& reply_markup) {
     std::string sendMessageURL = url + std::format("/sendMessage?text={}&chat_id={}", fillSpaces(text), chat_id);
+    if(reply_markup) sendMessageURL+="&reply_markup={\"inline_keyboard\":"+to_string(reply_markup->toJson())+"}";
     curl_easy_setopt(handle, CURLOPT_URL, sendMessageURL.c_str());
     curl_easy_perform(handle);
 }
@@ -105,8 +108,10 @@ void API::sendSticker(const std::string& sticker, long chat_id) {
  * @param video file_id or http url
  * @param chat_id ID of chat
  * @param caption Video message caption
+ * @param reply_markup
  */
-void API::sendVideo(const std::string &video, long chat_id, const std::optional<std::string>& caption) {
+void API::sendVideo(const std::string &video, long chat_id,
+                    const std::optional<std::string>& caption) {
     std::string sendVideoURL = url + std::format("/sendVideo?video={}&chat_id={}", video, chat_id);
     if(caption.has_value()) sendVideoURL+=std::format("&capture={}", fillSpaces(caption.value()));;
     curl_easy_setopt(handle, CURLOPT_URL, sendVideoURL.c_str());

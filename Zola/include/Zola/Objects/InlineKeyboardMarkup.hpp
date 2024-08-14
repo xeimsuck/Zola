@@ -23,10 +23,21 @@ namespace Zola::Objects {
          InlineKeyboardMarkup() = default;
 
          /*!
-          * @brief Parse json
+          * @brief Parse json to InlineKeyboardMarkup
           * @param data Json markup
           */
          explicit InlineKeyboardMarkup(const nlohmann::json& data);
+
+         /*!
+          * @brief Cast to json
+          * @return
+         */
+         explicit operator nlohmann::json() const;
+
+        /*!
+         * @brief Parse InlineKeyboardMarkup to json
+        */
+        [[nodiscard]]nlohmann::json toJson() const;
 
          /*!
           * @brief Array of button rows, each represented by an Array of InlineKeyboardButton objects

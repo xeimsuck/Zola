@@ -1,12 +1,29 @@
 #include <Zola/Objects/InlineKeyboardMarkup.hpp>
 
 using namespace Zola;
+using namespace Zola::Objects;
+using namespace nlohmann;
 
-Objects::InlineKeyboardMarkup::InlineKeyboardMarkup(const nlohmann::json &data) {
+InlineKeyboardMarkup::InlineKeyboardMarkup(const json &data) {
     for(decltype(auto) row : data){
-        inline_keyboard.push_back(std::vector<InlineKeyboardButton>());
+        inline_keyboard.emplace_back();
         for(decltype(auto) button : row){
             inline_keyboard.back().emplace_back(button);
         }
     }
+}
+
+InlineKeyboardMarkup::operator nlohmann::json() const {
+    return toJson();
+}
+
+json InlineKeyboardMarkup::toJson() const {
+    json parsed;
+    for(decltype(auto) row : inline_keyboard){
+        parsed.emplace_back();
+        for(decltype(auto) button : row){
+            parsed.back().push_back(button.toJson());
+        }
+    }
+    return parsed;
 }

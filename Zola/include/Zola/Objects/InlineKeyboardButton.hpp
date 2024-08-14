@@ -33,6 +33,16 @@ namespace Zola::Objects {
         explicit InlineKeyboardButton(const nlohmann::json& data);
 
         /*!
+         * @brief Cast to json
+         */
+        explicit operator nlohmann::json() const;
+
+        /*!
+         * @brief Parse to json
+         */
+        nlohmann::json toJson() const;
+
+        /*!
          * @brief Label text on the button.
          */
         std::string text;
