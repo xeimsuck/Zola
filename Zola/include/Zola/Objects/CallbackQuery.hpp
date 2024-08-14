@@ -4,7 +4,6 @@
     @author Xeim
     @version 0.2
     @data 13.08.24
-    @warning not finished
 
     This object represents an incoming callback query from a callback button
     in an inline keyboard. If the button that originated the query was attached
@@ -20,6 +19,8 @@
 #include <string>
 #include <nlohmann/json.hpp>
 #include "User.hpp"
+#include "Message.hpp"
+#include "InaccessibleMessage.hpp"
 
 namespace Zola::Objects {
     struct CallbackQuery {
@@ -66,7 +67,12 @@ namespace Zola::Objects {
          */
         std::optional<std::string> game_short_name;
 
-        //! @todo add message
+
+        /*!
+         * @brief Message sent by the bot with the callback button that originated the query.
+         * May be InaccessibleMessage
+         */
+        std::optional<Message> message;
     };
 }
 

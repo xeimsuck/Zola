@@ -15,4 +15,7 @@ Objects::CallbackQuery::CallbackQuery(const nlohmann::json &data) {
     if(data.contains("game_short_name")){
         game_short_name = data["game_short_name"];
     }
+    if(data.contains("message")){
+        message = Message(data["message"]);
+    }
 }
