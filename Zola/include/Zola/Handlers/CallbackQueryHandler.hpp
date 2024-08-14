@@ -35,7 +35,7 @@ namespace Zola::Handlers {
          * @param id ID of CallbackQuery
          * @return Handler which has this ID
          */
-        Handler& operator[](const std::string& id);
+        Handler& operator[](const std::string& data);
 
         /*!
          * @brief Call handlers
@@ -48,7 +48,7 @@ namespace Zola::Handlers {
          * @param id ID of CallbackQuery
          * @param handler Callback handler
          */
-        void add(const std::string& id, Handler handler);
+        void add(const std::string& data, Handler handler);
 
         /*!
          * @brief Add handler that will be called when "call" get object with any id
