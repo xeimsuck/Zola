@@ -18,22 +18,21 @@ Zola::Objects::Message::Message(const nlohmann::json& data) : chat(data["chat"])
             photo->emplace_back(photoSize);
         }
     }
+    if(data.contains("sender_chat")){
+        sender_chat = Chat(data["sender_chat"]);
+    }
     if(data.contains("caption")){
         caption = data["caption"];
     }
     if(data.contains("from")){
         from = User(data["from"]);
     }
-    if(data.contains("forward_from")){
-        forward_from = User(data["forward_from"]);
-    }
-    if(data.contains("forward_date")){
-        forward_date = data["forward_date"];
-    }
     if(data.contains("web_app_data")){
         web_app_data = WebAppInfo(data["web_app_data"]);
     }
     if(data.contains("reply_markup")){
-        reply_markup = InlineKeyboardMarkup(data["reply_markup"]);
+        if(data["reply_markup"].contains("inline_keyboard")){
+            reply_markup = InlineKeyboardMarkup(data["reply_markup"]["inline_keyboard"]);
+        }
     }
 }
