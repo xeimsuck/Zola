@@ -52,12 +52,12 @@ namespace Zola {
                                  const std::optional<std::string>& url = std::nullopt,
                                  const std::optional<int>& cache_time = std::nullopt);
         void editMessage(const std::string& text,
-                         const std::optional<std::string>& chat_id,
-                         const std::optional<std::string>& message_id,
-                         const std::optional<Objects::InlineKeyboardMarkup>& reply_markup,
-                         const std::optional<std::string>& inline_message_id,
-                         const std::optional<std::string>& business_connection_id,
-                         const std::optional<std::string>& parse_mod);
+                         const std::optional<std::string>& chat_id = std::nullopt,
+                         const std::optional<long>& message_id = std::nullopt,
+                         const std::optional<Objects::InlineKeyboardMarkup>& reply_markup = std::nullopt,
+                         const std::optional<std::string>& inline_message_id = std::nullopt,
+                         const std::optional<std::string>& business_connection_id = std::nullopt,
+                         const std::optional<std::string>& parse_mod = std::nullopt);
     private:
         static size_t writeCallback(char* ptr, size_t size, size_t n, void* data);
         static std::string correctParameter(const std::string& str);

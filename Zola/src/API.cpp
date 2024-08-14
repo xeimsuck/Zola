@@ -243,7 +243,7 @@ void API::answerCallbackQuery(const std::string &callback_query_id, const std::o
  * from the time they were sent.
  */
 void API::editMessage(const std::string &text, const std::optional<std::string> &chat_id,
-                      const std::optional<std::string> &message_id,
+                      const std::optional<long> &message_id,
                       const std::optional<Objects::InlineKeyboardMarkup> &reply_markup,
                       const std::optional<std::string> &inline_message_id,
                       const std::optional<std::string> &business_connection_id,
@@ -251,7 +251,7 @@ void API::editMessage(const std::string &text, const std::optional<std::string> 
     parameters params;
     params.emplace_back("text", text);
     if(chat_id) params.emplace_back("chat_id", chat_id.value());
-    if(message_id) params.emplace_back("message_id", message_id.value());
+    if(message_id) params.emplace_back("message_id", std::to_string(message_id.value()));
     if(reply_markup) params.emplace_back("reply_markup", to_string(reply_markup->toJson()));
     if(inline_message_id) params.emplace_back("inline_message_id", inline_message_id.value());
     if(business_connection_id) params.emplace_back("business_connection_id", business_connection_id.value());
