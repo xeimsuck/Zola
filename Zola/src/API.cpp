@@ -8,35 +8,7 @@ using namespace Zola;
  * @param token Bot token
  */
 API::API(const std::string& token) : tgUrl(std::format("https://api.telegram.org/bot{}", token)) {
-    curl_global_init(CURL_GLOBAL_ALL);
-    handle = curl_easy_init();
-    curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, writeCallback);
-    curl_easy_setopt(handle, CURLOPT_WRITEDATA, &buffer);
 }
-
-/*!
- * Destructor :D
- */
-API::~API() {
-    curl_easy_cleanup(handle);
-    curl_global_cleanup();
-}
-
-/*!
- * Curl write function callback
- * @param ptr content
- * @param size size of content
- * @param n idk
- * @param data buffer
- * @return count of writen bytes
- */
-size_t API::writeCallback(char *ptr, size_t size, size_t n, void *data) {
-    auto user_data = reinterpret_cast<std::string*>(data);
-    user_data->clear();
-    user_data->append(ptr, size*n);
-    return size*n;
-}
-
 
 /*!
  * Set %20 instead of spaces
@@ -78,9 +50,7 @@ std::string API::getUpdates(long offset) {
 
     std::string getUpdateURL = tgUrl + "/getUpdates" + parseParameters(params);
 
-    curl_easy_setopt(handle, CURLOPT_URL, getUpdateURL.c_str());
-    curl_easy_perform(handle);
-    return buffer;
+    return net.sendRequest(getUpdateURL);
 }
 
 /*!
@@ -100,8 +70,7 @@ void API::sendMessage(const std::string& text,
 
     std::string sendMessageURL = tgUrl + "/sendMessage" + parseParameters(params);
 
-    curl_easy_setopt(handle, CURLOPT_URL, sendMessageURL.c_str());
-    curl_easy_perform(handle);
+    net.sendRequest(sendMessageURL);
 }
 
 /*!
@@ -118,8 +87,7 @@ void API::sendSticker(const std::string& sticker, long chat_id) {
 
     std::string sendStickerURL = tgUrl + "/sendSticker" + parseParameters(params);
 
-    curl_easy_setopt(handle, CURLOPT_URL, sendStickerURL.c_str());
-    curl_easy_perform(handle);
+    net.sendRequest(sendStickerURL);
 }
 
 /*!
@@ -144,8 +112,7 @@ void API::sendVideo(const std::string &video, long chat_id,
 
     std::string sendVideoURL = tgUrl + "/sendVideo" + parseParameters(params);
 
-    curl_easy_setopt(handle, CURLOPT_URL, sendVideoURL.c_str());
-    curl_easy_perform(handle);
+    net.sendRequest(sendVideoURL);
 }
 
 /*!
@@ -164,8 +131,7 @@ void API::sendPhoto(const std::string &photo, long chat_id, const std::optional<
 
     std::string sendPhotoURL = tgUrl + "/sendPhoto" + parseParameters(params);
 
-    curl_easy_setopt(handle, CURLOPT_URL, sendPhotoURL.c_str());
-    curl_easy_perform(handle);
+    net.sendRequest(sendPhotoURL);
 }
 
 /*!
@@ -189,8 +155,7 @@ void API::sendVoice(const std::string &voice, long chat_id, const std::optional<
 
     std::string sendPhotoURL = tgUrl + "/sendVoice" + parseParameters(params);
 
-    curl_easy_setopt(handle, CURLOPT_URL, sendPhotoURL.c_str());
-    curl_easy_perform(handle);
+    net.sendRequest(sendPhotoURL);
 }
 
 /*!
@@ -217,8 +182,7 @@ void API::answerCallbackQuery(const std::string &callback_query_id, const std::o
 
     std::string answerCallbackQueryURL = tgUrl + "/answerCallbackQuery" + parseParameters(params);
 
-    curl_easy_setopt(handle, CURLOPT_URL, answerCallbackQueryURL.c_str());
-    curl_easy_perform(handle);
+    net.sendRequest(answerCallbackQueryURL);
 }
 
 /*!
@@ -258,6 +222,5 @@ void API::editMessage(const std::string &text, const std::optional<std::string> 
 
     std::string editMessageUrl = tgUrl + "/editMessage" + parseParameters(params);
 
-    curl_easy_setopt(handle, CURLOPT_URL, editMessageUrl.c_str());
-    curl_easy_perform(handle);
+    net.sendRequest(editMessageUrl);
 }

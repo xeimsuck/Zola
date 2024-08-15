@@ -1,9 +1,9 @@
 /*!
-    \file
-    \brief Class for working with Telegram API
-    \author Xeim
-    \version 0.1
-    \data 12.08.24
+    @file
+    @brief Class for working with Telegram API
+    @author Xeim
+    @version 0.2
+    @data 15.08.24
 
     Class that handles messages (also commands and edited messages)
  */
@@ -14,8 +14,8 @@
 #include <vector>
 #include <string>
 #include <format>
-#include <curl/curl.h>
-#include <Zola/Objects/InlineKeyboardMarkup.hpp>
+#include "Network/Url.hpp"
+#include "Objects/InlineKeyboardMarkup.hpp"
 
 namespace Zola {
     class API {
@@ -24,11 +24,10 @@ namespace Zola {
         using parameters = std::vector<parameter>;
 
         explicit API(const std::string& token);
-        ~API();
-        API(const API& url) = delete;
-        API(API&& url) = delete;
-        API& operator=(const API& r) = delete;
-        API& operator=(API&& r) = delete;
+        API(const API&) = delete;
+        API(API&&) = delete;
+        API& operator=(const API&) = delete;
+        API& operator=(API&&) = delete;
 
     public:
         std::string getUpdates(long offset=0);
@@ -59,14 +58,12 @@ namespace Zola {
                          const std::optional<std::string>& business_connection_id = std::nullopt,
                          const std::optional<std::string>& parse_mod = std::nullopt);
     private:
-        static size_t writeCallback(char* ptr, size_t size, size_t n, void* data);
         static std::string correctParameter(const std::string& str);
         static std::string parseParameters(const parameters& params);
 
     private:
         const std::string tgUrl;
-        std::string buffer;
-        CURL* handle = nullptr;
+        Network::Url net;
     };
 }
 
