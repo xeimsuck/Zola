@@ -158,6 +158,66 @@ void API::sendVoice(const std::string &voice, long chat_id, const std::optional<
     net.sendRequest(sendPhotoURL);
 }
 
+
+/*!
+ * @brief Use this method to send general files.
+ * @param document File to send. Pass a file_id or http url.
+ * @param chat_id Unique identifier for the target chat
+ * or username of the target channel.
+ * @param business_connection_id Unique identifier of the business
+ * connection on behalf of which the message will be sent.
+ * @param message_thread_id Unique identifier for the target
+ * message thread (topic) of the forum.
+ * @param thumbnail Thumbnail of the file sent.
+ * @param caption Document caption.
+ * @param parse_mod Mode for parsing entities in the document caption.
+ * @param disable_content_type_detection Disables automatic server-side
+ * content type detection for files uploaded using multipart/form-data.
+ * @param disable_notification Sends the message silently. Users will
+ * receive a notification with no sound.
+ * @param protect_content Protects the contents of the sent message
+ * from forwarding and saving.
+ * @param message_effect_id Unique identifier of the message effect
+ * to be added to the message; for private chats only.
+ * @param reply_markup Additional interface options (so far only InlineKeyboardMarkup).
+ * @warning Has not caption_entities and reply_parameters parameters.
+ *
+ * On success, the sent Message is returned. Bots can
+ * currently send files of any type of up to 50 MB in size,
+ * this limit may be changed in the future.
+ */
+void API::sendDocument(const std::string &document,
+						const long chat_id,
+						const std::optional<Objects::InlineKeyboardMarkup> &reply_markup,
+						const std::optional<std::string>&business_connection_id,
+						const std::optional<int> &message_thread_id,
+						const std::optional<std::string> &thumbnail,
+						const std::optional<std::string> &caption,
+						const std::optional<std::string> &parse_mod,
+						const std::optional<bool> &disable_content_type_detection,
+						const std::optional<bool> &disable_notification,
+						const std::optional<bool> &protect_content,
+						const std::optional<std::string> &message_effect_id) {
+	parameters params;
+	params.emplace_back("document", document);
+	params.emplace_back("chat_id", std::to_string(chat_id));
+	if(reply_markup) params.emplace_back("reply_markup", nlohmann::to_string(reply_markup->toJson()));
+	if(business_connection_id) params.emplace_back("business_connection_id", business_connection_id.value());
+	if(message_thread_id) params.emplace_back("message_thread_id", std::to_string(message_thread_id.value()));
+	if(thumbnail) params.emplace_back("thumbnail", thumbnail.value());
+	if(caption) params.emplace_back("caption", caption.value());
+	if(parse_mod) params.emplace_back("parse_mod", parse_mod.value());
+	if(disable_content_type_detection) params.emplace_back("disable_content_type_detection", disable_content_type_detection ? "true":"false");
+	if(disable_notification) params.emplace_back("disable_notification", disable_notification?"true":"false");
+	if(protect_content) params.emplace_back("protect_content", protect_content?"true":"false");
+	if(message_effect_id) params.emplace_back("message_effect_id", message_effect_id.value());
+
+	const std::string sendDocumentUrl = tgUrl + "/sendDocument" + parseParameters(params);
+
+	net.sendRequest(sendDocumentUrl);
+}
+
+
 /*!
  * @brief Use this method to send answers to callback queries sent from inline keyboards.
  * @param callback_query_id Unique identifier for the query to be answered.

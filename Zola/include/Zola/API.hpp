@@ -45,6 +45,18 @@ namespace Zola {
         void sendVoice(const std::string& voice,
                        long chat_id,
                        const std::optional<std::string>& caption = std::nullopt);
+        void sendDocument(const std::string& document,
+                         long chat_id,
+                         const std::optional<Objects::InlineKeyboardMarkup>& reply_markup = std::nullopt,
+                         const std::optional<std::string>& business_connection_id = std::nullopt,
+                         const std::optional<int>& message_thread_id = std::nullopt,
+                         const std::optional<std::string>& thumbnail = std::nullopt,
+                         const std::optional<std::string>& caption = std::nullopt,
+                         const std::optional<std::string>& parse_mod = std::nullopt,
+                         const std::optional<bool>& disable_content_type_detection= std::nullopt,
+                         const std::optional<bool>& disable_notification = std::nullopt,
+                         const std::optional<bool>& protect_content = std::nullopt,
+                         const std::optional<std::string>& message_effect_id = std::nullopt);
         void answerCallbackQuery(const std::string& callback_query_id,
                                  const std::optional<std::string>& text = std::nullopt,
                                  const std::optional<bool>& show_alert = std::nullopt,
