@@ -15,6 +15,8 @@ int main(int argc, char*argv[]){
             bot.getAPI().sendPhoto(msg.photo.value().front().file_id, msg.chat.id, msg.caption);
         } else if(msg.voice){
             bot.getAPI().sendVoice(msg.voice->file_id, msg.chat.id, msg.caption);
+        } else if(msg.document) {
+            bot.getAPI().sendDocument(msg.document->file_id, msg.chat.id);
         }
     });
     try {
