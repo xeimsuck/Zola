@@ -2,6 +2,8 @@
 #include <iostream>
 
 using namespace Zola;
+using namespace Zola::Objects;
+using namespace nlohmann;
 
 /*!
  * Constructor :D
@@ -283,4 +285,114 @@ void API::editMessage(const std::string &text, const std::optional<std::string> 
     std::string editMessageUrl = tgUrl + "/editMessage" + parseParameters(params);
 
     net.sendRequest(editMessageUrl);
+}
+
+
+/*!
+ * @brief Use this method to change the bot's name. Returns True on success.
+ * @param name New bot name; 0-64 characters. Pass an
+ * empty string to remove the dedicated name for the given language.
+ * @param language_code A two-letter ISO 639-1 language code. If empty,
+ * the name will be shown to all users for whose language there is no dedicated name.
+ * @return True on success
+ */
+bool API::setMyName(const std::optional<std::string> &name,
+					const std::optional<std::string>& language_code) {
+	parameters params;
+	if(name) params.emplace_back("name", name.value());
+	if(language_code) params.emplace_back("language_code", language_code.value());
+
+	const std::string setMyNameUrl = tgUrl + "/setMyName" + parseParameters(params);
+
+	return json::parse(net.sendRequest(setMyNameUrl))["ok"];
+}
+
+
+/*!
+ * @brief Use this method to change the bot's name. Returns True on success.
+ * @param botName New bot name.
+ * @param language_code A two-letter ISO 639-1 language code. If empty,
+ * the name will be shown to all users for whose language there is no dedicated name.
+ * @return True on success
+ */
+bool API::setMyName(const Objects::BotName &botName,
+					const std::optional<std::string>& language_code) {
+	parameters params;
+	params.emplace_back("name", botName.name);
+	if(language_code) params.emplace_back("language_code", language_code.value());
+
+	const std::string setMyNameUrl = tgUrl + "/setMyName" + parseParameters(params);
+
+	return json::parse(net.sendRequest(setMyNameUrl))["ok"];
+}
+
+
+/*!
+ * @brief Use this method to get the current bot name for the given user language.
+ * @param language_code A two-letter ISO 639-1 language code or an empty string.
+ * @return BotName with default constructor in failure case.
+ */
+BotName API::getMyName(const std::optional<std::string>& language_code) {
+	parameters params;
+	if(language_code)params.emplace_back("language_code", language_code.value());
+
+	const std::string getMyNameUrl = tgUrl + "/getMyName" + parseParameters(params);
+
+	auto data = json::parse(net.sendRequest(getMyNameUrl));
+	return data["ok"] ? BotName(data["result"]) : BotName();
+}
+
+
+/*!
+ * @brief Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty.
+ * @param description New bot description; 0-512 characters.
+ * Pass an empty string to remove the dedicated description for the given language.
+ * @param language_code A two-letter ISO 639-1 language code.
+ * If empty, the description will be applied to all users for whose language there is no dedicated description.
+ * @return True on success
+ */
+bool API::setMyDescription(const std::optional<std::string> &description,
+							const std::optional<std::string> &language_code) {
+	parameters params;
+	if(description) params.emplace_back("description", description.value());
+	if(language_code) params.emplace_back("language_code", language_code.value());
+
+	const std::string setMyDescriptionUrl = tgUrl + "/setMyDescription" + parseParameters(params);
+
+	return json::parse(net.sendRequest(setMyDescriptionUrl))["ok"];
+}
+
+
+/*!
+ * @brief Use this method to change the bot's description, which is shown in the chat with the bot if the chat is empty.
+ * @param botDescription New bot description.
+ * @param language_code A two-letter ISO 639-1 language code.
+ * If empty, the description will be applied to all users for whose language there is no dedicated description.
+ * @return True on success
+ */
+bool API::setMyDescription(const BotDescription &botDescription,
+						   const std::optional<std::string> &language_code) {
+	parameters params;
+	params.emplace_back("description", botDescription.description);
+	if(language_code) params.emplace_back("language_code", language_code.value());
+
+	const std::string setMyDescriptionUrl = tgUrl + "/setMyDescription" + parseParameters(params);
+
+	return json::parse(net.sendRequest(setMyDescriptionUrl))["ok"];
+}
+
+
+/*!
+ * @brief Use this method to get the current bot description for the given user language.
+ * @param language_code A two-letter ISO 639-1 language code or an empty string.
+ * @return BotDescription with default constructor in failure case.
+ */
+BotDescription API::getMyDescription(const std::optional<std::string> &language_code) {
+	parameters params;
+	if(language_code) params.emplace_back("language_code", language_code.value());
+
+	const std::string getMyDescriptionUrl = tgUrl + "/getMyDescription" + parseParameters(params);
+
+	auto data = json::parse(net.sendRequest(getMyDescriptionUrl));
+	return data["ok"] ? BotDescription(data["result"]) : BotDescription();
 }

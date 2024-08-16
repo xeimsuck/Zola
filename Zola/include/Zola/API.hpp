@@ -16,6 +16,8 @@
 #include <format>
 #include "Network/Url.hpp"
 #include "Objects/InlineKeyboardMarkup.hpp"
+#include "Objects/BotName.hpp"
+#include "Objects/BotDescription.hpp"
 
 namespace Zola {
     class API {
@@ -69,6 +71,16 @@ namespace Zola {
                          const std::optional<std::string>& inline_message_id = std::nullopt,
                          const std::optional<std::string>& business_connection_id = std::nullopt,
                          const std::optional<std::string>& parse_mod = std::nullopt);
+    	bool setMyName(const std::optional<std::string>& name = std::nullopt,
+					   const std::optional<std::string>& language_code = std::nullopt);
+    	bool setMyName(const Objects::BotName& botName,
+					   const std::optional<std::string>& language_code = std::nullopt);
+    	Objects::BotName getMyName(const std::optional<std::string>& language_code = std::nullopt);
+    	bool setMyDescription(const std::optional<std::string>& description = std::nullopt,
+					   const std::optional<std::string>& language_code = std::nullopt);
+    	bool setMyDescription(const Objects::BotDescription& botDescription,
+					   const std::optional<std::string>& language_code = std::nullopt);
+    	Objects::BotDescription getMyDescription(const std::optional<std::string>& language_code = std::nullopt);
     private:
         static std::string correctParameter(const std::string& str);
         static std::string parseParameters(const parameters& params);
