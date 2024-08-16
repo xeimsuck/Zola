@@ -24,6 +24,7 @@
 #include "Voice.hpp"
 #include "WebAppInfo.hpp"
 #include "InlineKeyboardMarkup.hpp"
+#include "Document.hpp"
 
 namespace Zola::Objects{
     struct Message {
@@ -120,6 +121,11 @@ namespace Zola::Objects{
          * Login_url buttons are represented as ordinary url buttons.
          */
         std::optional<InlineKeyboardMarkup> reply_markup = std::nullopt;
+
+        /*!
+         * @brief Message is a general file, information about the file.
+         */
+        std::optional<Document> document;
     };
 }
 

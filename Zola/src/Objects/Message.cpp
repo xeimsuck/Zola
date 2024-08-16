@@ -12,7 +12,9 @@ Zola::Objects::Message::Message(const nlohmann::json& data) : chat(data["chat"])
         video = Video(data["video"]);
     } else if(data.contains("voice")){
         voice = Voice(data["voice"]);
-    } else if(data.contains("photo")){
+    } else if(data.contains("document")) {
+        document = Document(data["document"]);
+    }else if(data.contains("photo")){
         photo = std::make_optional<std::vector<PhotoSize>>();
         for(decltype(auto) photoSize : data["photo"]){
             photo->emplace_back(photoSize);
