@@ -1,8 +1,10 @@
 #include <Zola/Objects/PhotoSize.hpp>
 
 using namespace Zola;
+using namespace Zola::Objects;
+using namespace nlohmann;
 
-Objects::PhotoSize::PhotoSize(const nlohmann::json &data) {
+PhotoSize::PhotoSize(const json &data) {
     file_id = data["file_id"];
     file_unique_id = data["file_unique_id"];
     width = data["width"];
@@ -11,3 +13,18 @@ Objects::PhotoSize::PhotoSize(const nlohmann::json &data) {
         file_size = data["file_size"];
     }
 }
+
+PhotoSize::operator json() const {
+    return toJson();
+}
+
+nlohmann::json PhotoSize::toJson() const {
+    json parsedData;
+    parsedData["file_id"] = file_id;
+    parsedData["file_unique_id"] = file_unique_id;
+    parsedData["width"] = width;
+    parsedData["height"] = height;
+    if(file_size) parsedData["file_size"] = file_size.value();
+    return parsedData;
+}
+

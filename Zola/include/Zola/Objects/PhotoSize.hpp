@@ -18,24 +18,52 @@
 
 namespace Zola::Objects {
     struct PhotoSize {
-        //! Constructor parse json message
-        explicit PhotoSize(const nlohmann::json& data);
+        /*!
+         * @brief Default constructor.
+         */
+    	PhotoSize() = default;
 
-        //! Identifier for this file, which can be used to download or reuse the file
+		/*!
+		 * Constructor parse json message.
+		 * @param data Data in json format.
+		 */
+		explicit PhotoSize(const nlohmann::json& data);
+
+    	/*!
+		 * @brief Cast to json
+		 */
+    	explicit operator nlohmann::json() const;
+
+    	/*!
+		 * @brief Parse Document to json format
+		 */
+    	[[nodiscard]]nlohmann::json toJson() const;
+
+    	/*!
+         * @brief Identifier for this file, which can be used to download or reuse the file.
+         */
         std::string file_id;
 
-        //! Unique identifier for this file
-        std::string file_unique_id;
+    	/*!
+		 * @brief Unique identifier for this file.
+		 */
+		std::string file_unique_id;
 
-        //! Photo width
-        long width;
+    	/*!
+		 * @brief Photo width.
+		 */
+		long width = 0;
 
-        //! Photo height
-        long height;
+    	/*!
+		 * @brief Photo height.
+		 */
+		long height = 0;
 
-        //! File size in bytes
-        std::optional<long> file_size;
+    	/*!
+		 * @brief File size in bytes.
+		 */
+		std::optional<long> file_size;
     };
 }
 
-#endif //ZOLA_PHOTO_HPP
+#endif //ZOLA_OBJECTS_PHOTO_HPP
