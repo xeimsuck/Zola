@@ -17,11 +17,6 @@
 
 namespace Zola::Objects {
 	struct ChatMemberOwner final : ChatMember {
-		/*!
-		 * @brief The value for the status attribute, always "creator".
-		 */
-		static constexpr std::string OWNER_STATUS = "creator";
-
 		ChatMemberOwner();
 
 		/*!

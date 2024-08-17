@@ -18,10 +18,8 @@
 namespace Zola::Objects {
 	struct ChatMemberAdministrator final : ChatMember {
 		/*!
-		 * @brief The value for the status attribute, always "administrator".
+		 * @brief OMG CONSTRUCTOR
 		 */
-		static constexpr std::string ADMINISTRATOR_STATUS = "administrator";
-
 		ChatMemberAdministrator();
 
 		/*!

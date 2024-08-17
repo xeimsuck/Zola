@@ -15,11 +15,6 @@
 
 namespace Zola::Objects {
 	struct ChatMemberBanned final : ChatMember{
-		/*!
-		 * @brief The value for the status attribute, always "kicked".
-		 */
-		static constexpr std::string BANNED_STATUS = "kicked";
-
 		ChatMemberBanned();
 
 		/*!

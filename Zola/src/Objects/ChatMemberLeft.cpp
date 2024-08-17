@@ -5,17 +5,17 @@ using namespace Zola::Objects;
 using namespace nlohmann;
 
 ChatMemberLeft::ChatMemberLeft() {
-	status = LEFT_STATUS;
+	status = Status::left;
 }
 
 ChatMemberLeft::ChatMemberLeft(const json &data) {
-	status = LEFT_STATUS;
+	status = Status::left;
 	user = User(data["user"]);
 }
 
 json ChatMemberLeft::toJson() const {
 	json data;
-	data["status"] = status;
+	data["status"] = "left";
 	data["user"] = user.toJson();
 	return data;
 }

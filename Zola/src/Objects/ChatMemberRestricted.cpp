@@ -5,11 +5,11 @@ using namespace Zola::Objects;
 using namespace nlohmann;
 
 ChatMemberRestricted::ChatMemberRestricted() {
-	status = RESTRICTED_STATUS;
+	status = Status::restricted;
 }
 
 ChatMemberRestricted::ChatMemberRestricted(const json &data) {
-	status = RESTRICTED_STATUS;
+	status = Status::restricted;
 	user = User(data["user"]);
 	is_member = data["is_member"];
 	can_send_message = data["can_send_message"];

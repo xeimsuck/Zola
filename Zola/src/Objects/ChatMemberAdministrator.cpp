@@ -5,11 +5,11 @@ using namespace Zola::Objects;
 using namespace nlohmann;
 
 ChatMemberAdministrator::ChatMemberAdministrator() {
-	status = ADMINISTRATOR_STATUS;
+	status = Status::administrator;
 }
 
 ChatMemberAdministrator::ChatMemberAdministrator(const json &data) {
-	status = ADMINISTRATOR_STATUS;
+	status = Status::administrator;
 	user = User(data["user"]);
 	is_anonymous = data["is_anonymous"];
 	can_be_edited = data["can_be_edited"];
@@ -32,7 +32,7 @@ ChatMemberAdministrator::ChatMemberAdministrator(const json &data) {
 
 json ChatMemberAdministrator::toJson() const {
 	json data;
-	data["status"] = status;
+	data["status"] = "administrator";
 	data["user"] = user.toJson();
 	data["is_anonymous"] = is_anonymous;
 	data["can_be_edited"] = can_be_edited;

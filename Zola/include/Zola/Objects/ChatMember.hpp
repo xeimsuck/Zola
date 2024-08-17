@@ -19,6 +19,13 @@
 namespace Zola::Objects {
 	struct ChatMember {
 		/*!
+		 * @brief Represent all statuses
+		 */
+		enum class Status {
+			error, kicked, left, member, restricted, administrator, creator
+		};
+
+		/*!
 		 * @brief Default constructor
 		 */
 		ChatMember() = default;
@@ -41,7 +48,7 @@ namespace Zola::Objects {
 		/*!
 		 * @brief The member's status in the chat.
 		 */
-		std::string status;
+		Status status = Status::error;
 
 		/*!
 		 * @brief Information about the user.

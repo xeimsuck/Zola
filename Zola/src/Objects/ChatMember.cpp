@@ -1,4 +1,5 @@
 #include <Zola/Objects/ChatMember.hpp>
+#include <magic_enum.hpp>
 
 using namespace Zola;
 using namespace Zola::Objects;
@@ -10,7 +11,7 @@ ChatMember::operator json() const {
 
 json ChatMember::toJson() const {
 	json data;
-	data["status"] = status;
+	data["status"] = magic_enum::enum_name(status);
 	data["user"] = user.toJson();
 	return data;
 }

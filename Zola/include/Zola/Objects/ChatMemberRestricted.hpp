@@ -18,11 +18,6 @@
 
 namespace Zola::Objects {
 	struct ChatMemberRestricted final : ChatMember {
-		/*!
-		 * @brief The value for the status attribute, always "restricted".
-		 */
-		static constexpr std::string RESTRICTED_STATUS = "restricted";
-
 		ChatMemberRestricted();
 
 		/*!

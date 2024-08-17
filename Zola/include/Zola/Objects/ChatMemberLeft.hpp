@@ -15,11 +15,6 @@
 
 namespace Zola::Objects {
 	struct ChatMemberLeft final : ChatMember{
-		/*!
-		 * @brief The value for the status attribute, always "left".
-		 */
-		static constexpr std::string LEFT_STATUS = "left";
-
 		ChatMemberLeft();
 
 		/*!

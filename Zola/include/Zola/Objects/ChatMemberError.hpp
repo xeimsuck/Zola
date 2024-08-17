@@ -17,11 +17,6 @@
 
 namespace Zola::Objects {
 	struct ChatMemberError final : ChatMember {
-		/*!
-		 * @brief The value for the status attribute, always "error".
-		 */
-		static constexpr std::string ERROR_STATUS = "error";
-
 		ChatMemberError();
 
 		ChatMemberError(long error_code, const std::string& description);

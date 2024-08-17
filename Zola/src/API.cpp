@@ -1,5 +1,6 @@
-#include <Zola/API.hpp>
 #include <iostream>
+#include <magic_enum.hpp>
+#include <Zola/API.hpp>
 #include <Zola/Objects/ChatMemberAdministrator.hpp>
 #include <Zola/Objects/ChatMemberBanned.hpp>
 #include <Zola/Objects/ChatMemberError.hpp>
@@ -11,6 +12,7 @@
 using namespace Zola;
 using namespace Zola::Objects;
 using namespace nlohmann;
+using namespace magic_enum;
 
 /*!
  * Constructor :D
@@ -453,7 +455,7 @@ std::shared_ptr<ChatMember> API::getChatMember(const std::string& chat_id, const
  * @param user_id Unique identifier of the target user.
  * @return Status of member in this chat.
  */
-std::string API::getChatMemberStatus(long chat_id, long user_id) {
+ChatMember::Status API::getChatMemberStatus(const long chat_id, const long user_id) {
 	return getChatMemberStatus(std::to_string(chat_id), user_id);
 }
 
@@ -464,7 +466,7 @@ std::string API::getChatMemberStatus(long chat_id, long user_id) {
  * @param user_id Unique identifier of the target user.
  * @return Status of member in this chat.
  */
-std::string API::getChatMemberStatus(const std::string &chat_id, long user_id) {
+ChatMember::Status API::getChatMemberStatus(const std::string &chat_id, const long user_id) {
 	parameters params;
 	params.emplace_back("chat_id", chat_id);
 	params.emplace_back("user_id", std::to_string(user_id));
@@ -472,8 +474,8 @@ std::string API::getChatMemberStatus(const std::string &chat_id, long user_id) {
 	const std::string getChatMemberUrl = tgUrl + "/getChatMember" + parseParameters(params);
 	auto data = json::parse(net.sendRequest(getChatMemberUrl));
 
-	if(!data["ok"]) return "error";
-	return data["result"]["status"];
+	if(!data["ok"]) return ChatMember::Status::error;
+	return enum_cast<ChatMember::Status>(to_string(data["result"]["status"])).value_or(ChatMember::Status::error);
 }
 
 

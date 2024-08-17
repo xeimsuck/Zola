@@ -17,11 +17,6 @@
 
 namespace Zola::Objects {
 	struct ChatMemberMember final : ChatMember {
-		/*!
- 		 * @brief The value for the status attribute, always "member".
- 		 */
-		static constexpr std::string MEMBER_STATUS = "member";
-
 		ChatMemberMember();
 
 		/*!

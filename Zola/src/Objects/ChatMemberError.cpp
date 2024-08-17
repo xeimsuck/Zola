@@ -5,11 +5,11 @@ using namespace Zola::Objects;
 using namespace nlohmann;
 
 ChatMemberError::ChatMemberError() {
-	status = ERROR_STATUS;
+	status = Status::error;
 }
 
 ChatMemberError::ChatMemberError(const long error_code, const std::string &description) {
-	status = ERROR_STATUS;
+	status = Status::error;
 	this->error_code = error_code;
 	this->description = description;
 }
@@ -17,7 +17,7 @@ ChatMemberError::ChatMemberError(const long error_code, const std::string &descr
 
 json ChatMemberError::toJson() const {
 	json data;
-	data["status"] = status;
+	data["status"] = "error";
 	return data;
 }
 
