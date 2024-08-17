@@ -405,7 +405,7 @@ BotDescription API::getMyDescription(const std::optional<std::string> &language_
 }
 
 /*!
- * Use this method to get information about a member of a chat.
+ * @brief Use this method to get information about a member of a chat.
  * @param chat_id 	Unique identifier for the target chat.
  * @param user_id 	Unique identifier of the target user.
  * @return A correct ChatMember object on success otherwise ChatMemberError.
@@ -418,7 +418,7 @@ std::shared_ptr<ChatMember> API::getChatMember(const long chat_id, const long us
 }
 
 /*!
- * Use this method to get information about a member of a chat.
+ * @brief Use this method to get information about a member of a chat.
  * @param chat_id Username of the target supergroup or channel.
  * @param user_id Unique identifier of the target user.
  * @return A correct ChatMember object on success otherwise ChatMemberError.
@@ -434,8 +434,6 @@ std::shared_ptr<ChatMember> API::getChatMember(const std::string& chat_id, const
 	const std::string getChatMemberUrl = tgUrl + "/getChatMember" + parseParameters(params);
 
 	auto data = json::parse(net.sendRequest(getChatMemberUrl));
-std::cerr << data.dump(4) << std::endl;
-
 	if(!data["ok"]) return std::make_shared<ChatMemberError>(data["error_code"], data["description"]);
 	const std::string status = data["result"]["status"];
 
@@ -447,4 +445,36 @@ std::cerr << data.dump(4) << std::endl;
 	if(status=="kicked") return std::make_shared<ChatMemberBanned>(data["result"]);
 	return std::make_shared<ChatMemberError>();
 }
+
+/*!
+ * @brief Use this method to get status of member in chat.
+ * @warning Not TelegramAPI method
+ * @param chat_id Unique identifier for the target chat.
+ * @param user_id Unique identifier of the target user.
+ * @return Status of member in this chat.
+ */
+std::string API::getChatMemberStatus(long chat_id, long user_id) {
+	return getChatMemberStatus(std::to_string(chat_id), user_id);
+}
+
+/*!
+ * @brief Use this method to get status of member in chat.
+ * @warning Not TelegramAPI method
+ * @param chat_id Username of the target supergroup or channel.
+ * @param user_id Unique identifier of the target user.
+ * @return Status of member in this chat.
+ */
+std::string API::getChatMemberStatus(const std::string &chat_id, long user_id) {
+	parameters params;
+	params.emplace_back("chat_id", chat_id);
+	params.emplace_back("user_id", std::to_string(user_id));
+
+	const std::string getChatMemberUrl = tgUrl + "/getChatMember" + parseParameters(params);
+	auto data = json::parse(net.sendRequest(getChatMemberUrl));
+
+	if(!data["ok"]) return "error";
+	return data["result"]["status"];
+}
+
+
 

@@ -84,6 +84,8 @@ namespace Zola {
     	Objects::BotDescription getMyDescription(const std::optional<std::string>& language_code = std::nullopt);
     	std::shared_ptr<Objects::ChatMember> getChatMember(long chat_id, long user_id);
     	std::shared_ptr<Objects::ChatMember> getChatMember(const std::string& chat_id, long user_id);
+    	std::string getChatMemberStatus(long chat_id, long user_id);
+    	std::string getChatMemberStatus(const std::string& chat_id, long user_id);
     private:
         static std::string correctParameter(const std::string& str);
         static std::string parseParameters(const parameters& params);
