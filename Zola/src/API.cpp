@@ -1,5 +1,12 @@
 #include <Zola/API.hpp>
 #include <iostream>
+#include <Zola/Objects/ChatMemberAdministrator.hpp>
+#include <Zola/Objects/ChatMemberBanned.hpp>
+#include <Zola/Objects/ChatMemberError.hpp>
+#include <Zola/Objects/ChatMemberLeft.hpp>
+#include <Zola/Objects/ChatMemberMember.hpp>
+#include <Zola/Objects/ChatMemberOwner.hpp>
+#include <Zola/Objects/ChatMemberRestricted.hpp>
 
 using namespace Zola;
 using namespace Zola::Objects;
@@ -396,3 +403,48 @@ BotDescription API::getMyDescription(const std::optional<std::string> &language_
 	auto data = json::parse(net.sendRequest(getMyDescriptionUrl));
 	return data["ok"] ? BotDescription(data["result"]) : BotDescription();
 }
+
+/*!
+ * Use this method to get information about a member of a chat.
+ * @param chat_id 	Unique identifier for the target chat.
+ * @param user_id 	Unique identifier of the target user.
+ * @return A correct ChatMember object on success otherwise ChatMemberError.
+ *
+ *  The method is only guaranteed to work for other users if the
+ *  bot is an administrator in the chat.
+ */
+std::shared_ptr<ChatMember> API::getChatMember(const long chat_id, const long user_id) {
+	return getChatMember(std::to_string(chat_id), user_id);
+}
+
+/*!
+ * Use this method to get information about a member of a chat.
+ * @param chat_id Username of the target supergroup or channel.
+ * @param user_id Unique identifier of the target user.
+ * @return A correct ChatMember object on success otherwise ChatMemberError.
+ *
+ * The method is only guaranteed to work for other users if the
+ * bot is an administrator in the chat.
+ */
+std::shared_ptr<ChatMember> API::getChatMember(const std::string& chat_id, const long user_id) {
+	parameters params;
+	params.emplace_back("chat_id", chat_id);
+	params.emplace_back("user_id", std::to_string(user_id));
+
+	const std::string getChatMemberUrl = tgUrl + "/getChatMember" + parseParameters(params);
+
+	auto data = json::parse(net.sendRequest(getChatMemberUrl));
+std::cerr << data.dump(4) << std::endl;
+
+	if(!data["ok"]) return std::make_shared<ChatMemberError>(data["error_code"], data["description"]);
+	const std::string status = data["result"]["status"];
+
+	if(status=="creator") return std::make_shared<ChatMemberOwner>(data["result"]);
+	if(status=="administrator") return std::make_shared<ChatMemberAdministrator>(data["result"]);
+	if(status=="member") return std::make_shared<ChatMemberMember>(data["result"]);
+	if(status=="restricted") return std::make_shared<ChatMemberRestricted>(data["result"]);
+	if(status=="left") return std::make_shared<ChatMemberLeft>(data["result"]);
+	if(status=="kicked") return std::make_shared<ChatMemberBanned>(data["result"]);
+	return std::make_shared<ChatMemberError>();
+}
+
