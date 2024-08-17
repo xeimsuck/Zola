@@ -71,7 +71,7 @@ namespace Zola::Objects {
 		 * @brief True, if the administrator can restrict, ban or
 		 * unban chat members, or access supergroup statistics.
 		 */
-		bool can_restrict_messages = false;
+		bool can_restrict_members = false;
 
 		/*!
 		 * @brief True, if the administrator can add new administrators

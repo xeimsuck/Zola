@@ -16,7 +16,7 @@ ChatMemberAdministrator::ChatMemberAdministrator(const json &data) {
 	can_manage_chat = data["can_manage_chat"];
 	can_delete_messages = data["can_delete_messages"];
 	can_manage_video_chats = data["can_manage_video_chats"];
-	can_restrict_messages = data["can_restrict_messages"];
+	can_restrict_members = data["can_restrict_members"];
 	can_promote_members = data["can_promote_members"];
 	can_change_info = data["can_change_info"];
 	can_invite_users = data["can_invite_users"];
@@ -39,7 +39,7 @@ json ChatMemberAdministrator::toJson() const {
 	data["can_manage_chat"] = can_manage_chat;
 	data["can_delete_messages"] = can_delete_messages;
 	data["can_manage_video_chats"] = can_manage_video_chats;
-	data["can_restrict_messages"] = can_restrict_messages;
+	data["can_restrict_members"] = can_restrict_members;
 	data["can_promote_members"] = can_promote_members;
 	data["can_change_info"] = can_change_info;
 	data["can_invite_users"] = can_invite_users;
