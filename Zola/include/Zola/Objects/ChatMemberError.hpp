@@ -24,10 +24,23 @@ namespace Zola::Objects {
 
 		ChatMemberError();
 
+		ChatMemberError(long error_code, const std::string& description);
+
 		/*!
 		 * @brief Parse ChatMemberError to json format.
 		 */
 		[[nodiscard]] nlohmann::json toJson() const override;
+
+
+		/*!
+		 * @brief Code of error
+		 */
+		long error_code = 0;
+
+		/*!
+		 * @brief Error description
+		 */
+		std::string description;
 	};
 }
 
