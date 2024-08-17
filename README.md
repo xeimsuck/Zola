@@ -5,7 +5,7 @@ Library for working with Telegram API.
 ## Dependencies
 **Languages:** C++20  
 **Build systems:** CMake, Make  
-**Libraries:** libcurl, nlohmann/json
+**Libraries:** libcurl, nlohmann/json, magic_enum
 ## Documentation
 Create documentation with doxygen
 ```shell
