@@ -29,6 +29,16 @@ namespace Zola::Objects{
         explicit User(const nlohmann::json& data);
 
         /*!
+         * @brief Cast to json.
+         */
+        explicit operator nlohmann::json() const;
+
+        /*!
+         * @brief Parse BotDescription to json format.
+         */
+        [[nodiscard]] nlohmann::json toJson() const;
+
+        /*!
          * @brief Unique identifier for this user or bot.
          *
          * This number may have more than 32 significant bits and some
