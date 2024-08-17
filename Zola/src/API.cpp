@@ -475,7 +475,7 @@ ChatMember::Status API::getChatMemberStatus(const std::string &chat_id, const lo
 	auto data = json::parse(net.sendRequest(getChatMemberUrl));
 
 	if(!data["ok"]) return ChatMember::Status::error;
-	return enum_cast<ChatMember::Status>(to_string(data["result"]["status"])).value_or(ChatMember::Status::error);
+	return enum_cast<ChatMember::Status>((std::string)data["result"]["status"]).value_or(ChatMember::Status::error);
 }
 
 
