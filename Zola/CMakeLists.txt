@@ -4,6 +4,9 @@ find_package(CURL REQUIRED)
 # nlohmann_json
 find_package(nlohmann_json REQUIRED)
 
+# magic_enum
+find_package(magic_enum REQUIRED)
+
 # Zola
 ## Sources
 FILE(GLOB_RECURSE Zola_SOURCES
@@ -12,7 +15,7 @@ FILE(GLOB_RECURSE Zola_SOURCES
 add_library(Zola STATIC ${Zola_SOURCES})
 ## Dependencies
 target_include_directories(Zola PUBLIC "include/"  ${CURL_INCLUDE_DIR})
-target_link_libraries(Zola PUBLIC ${CURL_LIBRARIES} nlohmann_json::nlohmann_json)
+target_link_libraries(Zola PUBLIC ${CURL_LIBRARIES} nlohmann_json::nlohmann_json magic_enum::magic_enum)
 ## Installation
 include(GNUInstallDirs)
 set(INCLUDE_INSTALL_DIR "${CMAKE_INSTALL_INCLUDEDIR}/Zola"
