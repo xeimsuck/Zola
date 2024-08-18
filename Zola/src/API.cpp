@@ -88,6 +88,22 @@ void API::sendMessage(const std::string& text,
 }
 
 /*!
+ * @brief Use this method to send text messages.
+ * @param msg Message object
+ */
+void API::sendMessage(const Message &msg) {
+	parameters params;
+	params.emplace_back("text", msg.text.value_or(""));
+	params.emplace_back("chat_id", std::to_string(msg.chat.id));
+	if(msg.reply_markup) params.emplace_back("reply_markup", to_string(msg.reply_markup->toJson()));
+
+	const std::string sendMessageURL = tgUrl + "/sendMessage" + parseParameters(params);
+
+	net.sendRequest(sendMessageURL);
+}
+
+
+/*!
  * @brief Use this method to send static .WEBP, animated .TGS, or video .WEBM stickers.
  * @param sticker Sticker to send. Pass a file_id or a http url
  * @param chat_id Unique identifier for the target chat or username of the target channel.
