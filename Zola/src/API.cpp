@@ -34,6 +34,7 @@ std::string API::correctParameter(const std::string &str) {
         else if(c=='&') result += "%26";
     	else if(c=='\n') result += "%0A";
     	else if(c=='\r') result+= "%0D";
+    	else if(c=='\t') result+="%09";
         else result.push_back(c);
     }
     return result;
