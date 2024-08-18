@@ -1,8 +1,9 @@
 #include <Zola/Objects/Message.hpp>
 
-Zola::Objects::Message::Message(const nlohmann::json& data) : chat(data["chat"]) {
+Zola::Objects::Message::Message(const nlohmann::json& data) {
     message_id = data["message_id"];
     date = data["date"];
+    chat = Chat(data["chat"]);
     if(data.contains("text")){
         text = data["text"];
     }
