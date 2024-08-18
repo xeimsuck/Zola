@@ -502,7 +502,7 @@ optional<Error> API::deleteMessage(const std::string &chat_id, long message_id) 
 	params.emplace_back("chat_id", chat_id);
 	params.emplace_back("message_id", std::to_string(message_id));
 
-	const std::string deleteMessageUrl = tgUrl + "/deleteMessageUrl" + parseParameters(params);
+	const std::string deleteMessageUrl = tgUrl + "/deleteMessage" + parseParameters(params);
 	auto data = json::parse(net.sendRequest(deleteMessageUrl));
 
 	optional<Error> error = nullopt;
