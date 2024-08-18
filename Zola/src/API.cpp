@@ -31,6 +31,8 @@ std::string API::correctParameter(const std::string &str) {
     for(auto c : str){
         if(c==' ') result += "%20";
         else if(c=='&') result += "%26";
+    	else if(c=='\n') result += "%0A";
+    	else if(c=='\r') result+= "%0D";
         else result.push_back(c);
     }
     return result;
