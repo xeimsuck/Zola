@@ -19,6 +19,7 @@
 #include "Objects/BotName.hpp"
 #include "Objects/BotDescription.hpp"
 #include "Objects/ChatMember.hpp"
+#include "Objects/Error.hpp"
 
 namespace Zola {
     class API {
@@ -72,6 +73,8 @@ namespace Zola {
                          const std::optional<std::string>& inline_message_id = std::nullopt,
                          const std::optional<std::string>& business_connection_id = std::nullopt,
                          const std::optional<std::string>& parse_mod = std::nullopt);
+    	std::optional<Objects::Error> deleteMessage(long chat_id, long message_id);
+    	std::optional<Objects::Error> deleteMessage(const std::string& chat_id, long message_id);
     	bool setMyName(const std::optional<std::string>& name = std::nullopt,
 					   const std::optional<std::string>& language_code = std::nullopt);
     	bool setMyName(const Objects::BotName& botName,

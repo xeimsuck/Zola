@@ -13,6 +13,7 @@ using namespace Zola;
 using namespace Zola::Objects;
 using namespace nlohmann;
 using namespace magic_enum;
+using std::optional, std::nullopt;
 
 /*!
  * Constructor :D
@@ -480,5 +481,35 @@ ChatMember::Status API::getChatMemberStatus(const std::string &chat_id, const lo
 	return enum_cast<ChatMember::Status>((std::string)data["result"]["status"]).value_or(ChatMember::Status::error);
 }
 
+/*!
+ * @brief Use this method to delete a message.
+ * @param chat_id Unique identifier for the target chat.
+ * @param message_id Identifier of the message to delete.
+ * @return Return Error object on failure.
+ */
+optional<Error> API::deleteMessage(const long chat_id, const long message_id) {
+	return deleteMessage(std::to_string(chat_id), message_id);
+}
+
+/*!
+ * @brief Use this method to delete a message.
+ * @param chat_id Username of the target channel.
+ * @param message_id Identifier of the message to delete.
+ * @return Return Error object on failure.
+ */
+optional<Error> API::deleteMessage(const std::string &chat_id, long message_id) {
+	parameters params;
+	params.emplace_back("chat_id", chat_id);
+	params.emplace_back("message_id", std::to_string(message_id));
+
+	const std::string deleteMessageUrl = tgUrl + "/deleteMessageUrl" + parseParameters(params);
+	auto data = json::parse(net.sendRequest(deleteMessageUrl));
+
+	optional<Error> error = nullopt;
+	if(!data["ok"]) {
+		error = Error{.error_code = data["error_code"], .description = data["description"]};
+	}
+	return error;
+}
 
 
