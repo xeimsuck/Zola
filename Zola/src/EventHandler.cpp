@@ -33,7 +33,7 @@ MessageHandler &EventHandler::getMessageHandler() {
 }
 
 //! Return command handler
-MessageHandler &EventHandler::getCommandHandler() {
+CommandHandler &EventHandler::getCommandHandler() {
     return commandHandler;
 }
 

@@ -17,6 +17,7 @@
 #include "Objects/Error.hpp"
 #include <Zola/Handlers/MessageHandler.hpp>
 #include <Zola/Handlers/CallbackQueryHandler.hpp>
+#include <Zola/Handlers/CommandHandler.hpp>
 
 namespace Zola {
     class EventHandler {
@@ -24,14 +25,14 @@ namespace Zola {
         void updateHandler(const Objects::Update& update);
         void errorHandler(const Objects::Error& error);
         Handlers::MessageHandler& getMessageHandler();
-        Handlers::MessageHandler& getCommandHandler();
+        Handlers::CommandHandler& getCommandHandler();
         Handlers::MessageHandler& getEditedMessageHandler();
         Handlers::MessageHandler& getChannelPostHandler();
         Handlers::MessageHandler& getEditedChannelPostHandler();
         Handlers::CallbackQueryHandler& getCallbackQueryHandler();
     private:
         Handlers::MessageHandler messageHandler;
-        Handlers::MessageHandler commandHandler;
+        Handlers::CommandHandler commandHandler;
         Handlers::MessageHandler editedMessageHandler;
         Handlers::MessageHandler channelPostHandler;
         Handlers::MessageHandler editedChannelPostHandler;
