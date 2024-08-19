@@ -22,7 +22,7 @@ namespace Zola::Handlers {
         /*!
          * @brief Callback alias
          */
-        using Handler = std::function<void(Objects::CallbackQuery)>;
+        using Handler = std::function<void(const Objects::CallbackQuery&)>;
 
     public:
         /*!

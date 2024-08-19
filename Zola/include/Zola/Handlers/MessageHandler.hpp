@@ -19,7 +19,7 @@
 namespace Zola::Handlers {
     class MessageHandler{
     public:
-        using Handler = std::function<void(Objects::Message)>;
+        using Handler = std::function<void(const Objects::Message&)>;
 
     public:
         void operator()(const Objects::Message& message);
