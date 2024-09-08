@@ -27,6 +27,13 @@ namespace Zola::Objects {
         InlineKeyboardButton() = default;
 
         /*!
+         * ZOPA
+         * @param text
+         * @param callback_data
+         */
+        InlineKeyboardButton(std::string text, std::string callback_data);
+
+        /*!
          * @brief Parse json.
          * @param data Json button.
          */

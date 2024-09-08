@@ -44,3 +44,8 @@ json InlineKeyboardButton::toJson() const{
     if(pay) unparsed["pay"] = pay.value();
     return unparsed;
 }
+
+InlineKeyboardButton::InlineKeyboardButton(std::string _text, std::string _callback_data) :
+            text(std::move(_text)),
+            callback_data(std::move(_callback_data)){
+}
