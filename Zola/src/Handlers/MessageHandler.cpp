@@ -13,11 +13,10 @@ MessageHandler::Handler &MessageHandler::operator[](const std::string &text) {
 
 void MessageHandler::call(const Objects::Message& message){
     if(anyHandler) anyHandler(message);
-    if(!message.text.has_value()) return;
-    if(handlers.contains(message.text.value())){
+    if(message.text.has_value() && handlers.contains(message.text.value())){
         handlers[message.text.value()](message);
-    } else {
-        if(unknownHandler) unknownHandler(message);
+    } else if(unknownHandler){
+        unknownHandler(message);
     }
 }
 
