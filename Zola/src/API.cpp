@@ -134,14 +134,16 @@ void API::sendSticker(const std::string& sticker, long chat_id) {
  * send video files of up to 50 MB in size, this
  * limit may be changed in
  */
-void API::sendVideo(const std::string &video, long chat_id,
-                    const std::optional<std::string>& caption) {
+void API::sendVideo(const std::string &video, const long chat_id,
+                    const std::optional<std::string>& caption,
+                    const std::optional<Objects::InlineKeyboardMarkup>& reply_markup ) {
     parameters params;
     params.emplace_back("video", video);
     params.emplace_back("chat_id", std::to_string(chat_id));
     if(caption) params.emplace_back("caption", caption.value());
+	if(reply_markup) params.emplace_back("reply_markup", to_string(reply_markup->toJson()));
 
-    std::string sendVideoURL = tgUrl + "/sendVideo" + parseParameters(params);
+    const std::string sendVideoURL = tgUrl + "/sendVideo" + parseParameters(params);
 
     net.sendRequest(sendVideoURL);
 }
