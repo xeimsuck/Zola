@@ -40,11 +40,12 @@ namespace Zola::Network {
          * @param data buffer
          * @return count of writen bytes
          */
-        static size_t writeCallback(char* ptr, size_t size, size_t n, void* data);
+        static size_t writeCallback(const char* ptr, size_t size, size_t n, std::string *data);
 
     private:
         std::string buffer;
         CURL* handle = nullptr;
+        static bool requestSent;
     };
 }
 
