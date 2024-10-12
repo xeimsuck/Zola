@@ -299,12 +299,12 @@ void API::answerCallbackQuery(const std::string &callback_query_id, const std::o
  * not contain an inline keyboard can only be edited within 48 hours
  * from the time they were sent.
  */
-void API::editMessageText(const std::string &text, const std::optional<std::string> &chat_id,
+std::optional<Error> API::editMessageText(const std::string &text, const std::optional<std::string> &chat_id,
                       const std::optional<long> &message_id,
                       const std::optional<Objects::InlineKeyboardMarkup> &reply_markup,
                       const std::optional<std::string> &inline_message_id,
                       const std::optional<std::string> &business_connection_id,
-                      const std::optional<std::string> &parse_mod) {
+                      const std::optional<std::string> &parse_mode) {
     parameters params;
     params.emplace_back("text", text);
     if(chat_id) params.emplace_back("chat_id", chat_id.value());
@@ -312,12 +312,58 @@ void API::editMessageText(const std::string &text, const std::optional<std::stri
     if(reply_markup) params.emplace_back("reply_markup", to_string(reply_markup->toJson()));
     if(inline_message_id) params.emplace_back("inline_message_id", inline_message_id.value());
     if(business_connection_id) params.emplace_back("business_connection_id", business_connection_id.value());
+	if(parse_mode) params.emplace_back("parse_mode", parse_mode.value());
 
     const std::string editMessageUrl = tgUrl + "/editMessageText" + parseParameters(params);
 
-    net.sendRequest(editMessageUrl);
+	auto data = json::parse(net.sendRequest(editMessageUrl));
+
+	optional<Error> error = nullopt;
+	if(!data["ok"]) {
+		error = Error{.error_code = data["error_code"], .description = data["description"]};
+	}
+	return error;
 }
 
+/*!
+ * @brief Use this method to edit animation, audio, document, photo, or video messages.
+ * @param media A JSON-serialized object for a new media content of the message.
+ * @param chat_id Required if inline_message_id is not specified. Unique identifier for the target chat or username of the target channel.
+ * @param message_id Required if inline_message_id is not specified. Identifier of the message to edit.
+ * @param reply_markup A JSON-serialized object for a new inline keyboard.
+ * @param inline_message_id Required if chat_id and message_id are not specified. Identifier of the inline message.
+ * @param business_connection_id Unique identifier of the business connection on behalf of which the message to be edited was sent.
+ * @return std::nullopt is succesfull, otherway Error object
+ *
+ * If a message is part of a message album, then it can be edited only to an audio for audio
+ * albums, only to a document for document albums and to a photo or a video otherwise.
+ * When an inline message is edited, a new file can't be uploaded; use a previously uploaded file
+ * via its file_id or specify a URL.
+ */
+std::optional<Error> API::editMessageMedia(const InputMedia &media,
+							const std::optional<std::string> &chat_id,
+							const std::optional<long> &message_id,
+							const std::optional<InlineKeyboardMarkup> &reply_markup,
+							const std::optional<std::string> &inline_message_id,
+							const std::optional<std::string> &business_connection_id) {
+	parameters params;
+	params.emplace_back("media", nlohmann::to_string(media.toJson()));
+	if(chat_id) params.emplace_back("chat_id", chat_id.value());
+	if(message_id) params.emplace_back("message_id", std::to_string(message_id.value()));
+	if(reply_markup) params.emplace_back("reply_markup", nlohmann::to_string(reply_markup->toJson()));
+	if(inline_message_id) params.emplace_back("inline_message_id", inline_message_id.value());
+	if(business_connection_id) params.emplace_back("business_connection_id", business_connection_id.value());
+
+	const std::string editMessageUrl = tgUrl + "/editMessageMedia" + parseParameters(params);
+
+	auto data = json::parse(net.sendRequest(editMessageUrl));
+
+	optional<Error> error = nullopt;
+	if(!data["ok"]) {
+		error = Error{.error_code = data["error_code"], .description = data["description"]};
+	}
+	return error;
+}
 
 /*!
  * @brief Use this method to change the bot's name. Returns True on success.
@@ -530,5 +576,3 @@ optional<Error> API::deleteMessage(const std::string &chat_id, long message_id) 
 	}
 	return error;
 }
-
-

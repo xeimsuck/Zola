@@ -20,6 +20,7 @@
 #include "Objects/BotDescription.hpp"
 #include "Objects/ChatMember.hpp"
 #include "Objects/Error.hpp"
+#include "Objects/InputMedia.hpp"
 #include "Objects/Message.hpp"
 
 namespace Zola {
@@ -69,13 +70,20 @@ namespace Zola {
                                  const std::optional<bool>& show_alert = std::nullopt,
                                  const std::optional<std::string>& url = std::nullopt,
                                  const std::optional<int>& cache_time = std::nullopt);
-        void editMessageText(const std::string& text,
+        std::optional<Objects::Error> editMessageText(const std::string& text,
                          const std::optional<std::string>& chat_id = std::nullopt,
                          const std::optional<long>& message_id = std::nullopt,
                          const std::optional<Objects::InlineKeyboardMarkup>& reply_markup = std::nullopt,
                          const std::optional<std::string>& inline_message_id = std::nullopt,
                          const std::optional<std::string>& business_connection_id = std::nullopt,
                          const std::optional<std::string>& parse_mod = std::nullopt);
+    	std::optional<Objects::Error> editMessageMedia(const Objects::InputMedia& media,
+    					 const std::optional<std::string>& chat_id = std::nullopt,
+						 const std::optional<long>& message_id = std::nullopt,
+						 const std::optional<Objects::InlineKeyboardMarkup>& reply_markup = std::nullopt,
+						 const std::optional<std::string>& inline_message_id = std::nullopt,
+						 const std::optional<std::string>& business_connection_id = std::nullopt);
+
     	std::optional<Objects::Error> deleteMessage(long chat_id, long message_id);
     	std::optional<Objects::Error> deleteMessage(const std::string& chat_id, long message_id);
     	bool setMyName(const std::optional<std::string>& name = std::nullopt,
