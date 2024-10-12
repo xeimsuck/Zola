@@ -89,7 +89,7 @@ void API::sendMessage(const std::string& text,
     params.emplace_back("text", text);
     params.emplace_back("chat_id", std::to_string(chat_id));
     if(reply_markup) params.emplace_back("reply_markup", to_string(reply_markup->toJson()));
-	if(parse_mode) params.emplace_back("parse_mode", parse_mode.value()?"true":"false");
+	if(parse_mode) params.emplace_back("parse_mode", parse_mode.value());
 	if(protect_content) params.emplace_back("protect_content", protect_content.value()?"true":"false");
 	if(message_effect_id) params.emplace_back("message_effect_id", message_effect_id.value());
 
