@@ -50,7 +50,8 @@ namespace Zola {
         void sendVideo(const std::string& video,
                        long chat_id,
                        const std::optional<std::string>& caption = std::nullopt,
-                       const std::optional<Objects::InlineKeyboardMarkup>& reply_markup = std::nullopt);
+                       const std::optional<Objects::InlineKeyboardMarkup>& reply_markup = std::nullopt,
+                       const std::optional<std::string>& parse_mode = std::nullopt);
         void sendPhoto(const std::string& photo,
                        long chat_id,
                        const std::optional<std::string>& caption = std::nullopt);

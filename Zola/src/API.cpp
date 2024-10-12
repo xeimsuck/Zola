@@ -130,11 +130,12 @@ void API::sendSticker(const std::string& sticker, long chat_id) {
 }
 
 /*!
- * @brief Use this method to send video files
- * @param video file_id or http url
- * @param chat_id ID of chat
- * @param caption Video message caption
- * @param reply_markup
+ * @brief Use this method to send video files.
+ * @param video file_id or http url.
+ * @param chat_id ID of chat.
+ * @param caption Video message caption.
+ * @param reply_markup Additional interface options.
+ * @param parse_mode Mode for parsing entities in the video caption.
  *
  * Telegram clients support MPEG4 videos (other
  * formats may be sent as Document). On success,
@@ -144,12 +145,14 @@ void API::sendSticker(const std::string& sticker, long chat_id) {
  */
 void API::sendVideo(const std::string &video, const long chat_id,
                     const std::optional<std::string>& caption,
-                    const std::optional<Objects::InlineKeyboardMarkup>& reply_markup ) {
+                    const std::optional<Objects::InlineKeyboardMarkup>& reply_markup,
+                    const std::optional<std::string>& parse_mode) {
     parameters params;
     params.emplace_back("video", video);
     params.emplace_back("chat_id", std::to_string(chat_id));
     if(caption) params.emplace_back("caption", caption.value());
 	if(reply_markup) params.emplace_back("reply_markup", to_string(reply_markup->toJson()));
+	if(parse_mode) params.emplace_back("parse_mode", parse_mode.value());
 
     const std::string sendVideoURL = tgUrl + "/sendVideo" + parseParameters(params);
 
