@@ -69,7 +69,7 @@ namespace Zola {
                                  const std::optional<bool>& show_alert = std::nullopt,
                                  const std::optional<std::string>& url = std::nullopt,
                                  const std::optional<int>& cache_time = std::nullopt);
-        void editMessage(const std::string& text,
+        void editMessageText(const std::string& text,
                          const std::optional<std::string>& chat_id = std::nullopt,
                          const std::optional<long>& message_id = std::nullopt,
                          const std::optional<Objects::InlineKeyboardMarkup>& reply_markup = std::nullopt,

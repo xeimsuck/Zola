@@ -299,7 +299,7 @@ void API::answerCallbackQuery(const std::string &callback_query_id, const std::o
  * not contain an inline keyboard can only be edited within 48 hours
  * from the time they were sent.
  */
-void API::editMessage(const std::string &text, const std::optional<std::string> &chat_id,
+void API::editMessageText(const std::string &text, const std::optional<std::string> &chat_id,
                       const std::optional<long> &message_id,
                       const std::optional<Objects::InlineKeyboardMarkup> &reply_markup,
                       const std::optional<std::string> &inline_message_id,
@@ -313,7 +313,7 @@ void API::editMessage(const std::string &text, const std::optional<std::string> 
     if(inline_message_id) params.emplace_back("inline_message_id", inline_message_id.value());
     if(business_connection_id) params.emplace_back("business_connection_id", business_connection_id.value());
 
-    std::string editMessageUrl = tgUrl + "/editMessage" + parseParameters(params);
+    const std::string editMessageUrl = tgUrl + "/editMessageText" + parseParameters(params);
 
     net.sendRequest(editMessageUrl);
 }
