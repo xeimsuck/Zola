@@ -64,6 +64,12 @@ namespace Zola::Objects {
          * @brief Caption of the photo to be sent, 0-1024 characters after entities parsing
          */
         std::optional<std::string> caption = std::nullopt;
+
+
+        /*!
+         * @brief Mode for parsing entities in the photo caption
+         */
+        std::optional<std::string> parse_mode = std::nullopt;
     };
 }
 

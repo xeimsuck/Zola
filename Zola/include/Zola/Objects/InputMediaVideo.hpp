@@ -26,7 +26,7 @@ namespace Zola::Objects {
         /*!
          * @brief Constructor
          */
-        InputMediaVideo(std::string media, std::optional<std::string> caption = std::nullopt);
+        InputMediaVideo(std::string media, std::optional<std::string> caption = std::nullopt, std::optional<std::string> = std::nullopt);
 
         /*!
          * Parse json format.

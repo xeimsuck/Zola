@@ -14,5 +14,6 @@ json InputMedia::toJson() const {
     data["type"] = magic_enum::enum_name(type);
     data["media"] = media;
     if(caption) data["caption"] = caption.value();
+    if(parse_mode) data["parse_node"] = parse_mode.value();
     return data;
 }
