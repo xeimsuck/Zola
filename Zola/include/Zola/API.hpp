@@ -39,7 +39,11 @@ namespace Zola {
         std::string getUpdates(long offset=0);
         void sendMessage(const std::string& text,
                          long chat_id,
-                         const std::optional<Objects::InlineKeyboardMarkup>& reply_markup = std::nullopt);
+                         const std::optional<Objects::InlineKeyboardMarkup>& reply_markup = std::nullopt,
+                         const std::optional<std::string>& parse_mode,
+                         const std::optional<bool>& disable_notification,
+                         const std::optional<bool>& protect_content,
+                         const std::optional<std::string>& message_effect_id);
     	void sendMessage(const Objects::Message& msg);
         void sendSticker(const std::string& sticker,
                          long chat_id);

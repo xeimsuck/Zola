@@ -72,20 +72,28 @@ std::string API::getUpdates(long offset) {
  * @brief Use this method to send text messages.
  * @param text Text of the message to be sent, 1-4096 characters after entities parsing.
  * @param chat_id Unique identifier for the target chat or username of the target channel.
- *
- * On success, the sent Message is returned
+ * @param reply_markup 	Additional interface options.
+ * @param parse_mode Mode for parsing entities in the message text.
+ * @param disable_notification Sends the message silently. Users will receive a notification with no sound.
+ * @param protect_content Protects the contents of the sent message from forwarding and saving.
+ * @param message_effect_id Unique identifier of the message effect to be added to the message; for private chats only.
  */
 void API::sendMessage(const std::string& text,
-                      long chat_id,
-                      const std::optional<Objects::InlineKeyboardMarkup>& reply_markup) {
+                      const long chat_id,
+                      const std::optional<Objects::InlineKeyboardMarkup>& reply_markup,
+                      const std::optional<std::string>& parse_mode,
+                      const std::optional<bool>& disable_notification,
+                      const std::optional<bool>& protect_content,
+                      const std::optional<std::string>& message_effect_id) {
     parameters params;
     params.emplace_back("text", text);
     params.emplace_back("chat_id", std::to_string(chat_id));
     if(reply_markup) params.emplace_back("reply_markup", to_string(reply_markup->toJson()));
+	if(parse_mode) params.emplace_back("parse_mode", parse_mode.value()?"true":"false");
+	if(protect_content) params.emplace_back("protect_content", protect_content.value()?"true":"false");
+	if(message_effect_id) params.emplace_back("message_effect_id", message_effect_id.value());
 
-    std::string sendMessageURL = tgUrl + "/sendMessage" + parseParameters(params);
-
-    net.sendRequest(sendMessageURL);
+    net.sendRequest(tgUrl + "/sendMessage" + parseParameters(params));
 }
 
 /*!
@@ -240,9 +248,9 @@ void API::sendDocument(const std::string &document,
 	if(thumbnail) params.emplace_back("thumbnail", thumbnail.value());
 	if(caption) params.emplace_back("caption", caption.value());
 	if(parse_mod) params.emplace_back("parse_mod", parse_mod.value());
-	if(disable_content_type_detection) params.emplace_back("disable_content_type_detection", disable_content_type_detection ? "true":"false");
-	if(disable_notification) params.emplace_back("disable_notification", disable_notification?"true":"false");
-	if(protect_content) params.emplace_back("protect_content", protect_content?"true":"false");
+	if(disable_content_type_detection) params.emplace_back("disable_content_type_detection", disable_content_type_detection.value() ? "true":"false");
+	if(disable_notification) params.emplace_back("disable_notification", disable_notification.value()?"true":"false");
+	if(protect_content) params.emplace_back("protect_content", protect_content.value()?"true":"false");
 	if(message_effect_id) params.emplace_back("message_effect_id", message_effect_id.value());
 
 	const std::string sendDocumentUrl = tgUrl + "/sendDocument" + parseParameters(params);
