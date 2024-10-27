@@ -29,9 +29,9 @@ std::string Url::sendRequest(const std::string &url) {
 
 size_t Url::writeCallback(const char *ptr, const size_t size, const size_t n, std::string *data) {
     if(requestSent) {
+        requestSent = false;
         data->clear();
     }
-    *data += std::string(ptr, size*n);
-    requestSent = false;
+    data->append(ptr, size*n);
     return size*n;
 }
